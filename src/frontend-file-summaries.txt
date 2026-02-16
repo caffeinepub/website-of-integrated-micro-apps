@@ -1,0 +1,5 @@
+{
+  "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx": "AI Playground micro-app shell with prompt input, simulated AI responses, and conversation history display.",
+  "frontend/src/components/MicroAppCard.tsx": "Reusable micro-app card component that displays app info with category theming and navigates to the app route on click using useNavigate hook.",
+  "frontend/src/index.css": "Global styles with OKLCH color system using warm coral/orange primary palette, supporting both light and dark modes with Tailwind CSS integration."
+}

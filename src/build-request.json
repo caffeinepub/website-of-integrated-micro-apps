@@ -1,0 +1,293 @@
+{
+  "kind": "build_request",
+  "title": "ICP portal for integrated micro-apps with multi-tenant RBAC, directory, and starter micro-app shells",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a portal-style home experience that serves as a hub for multiple micro-apps/subsites, including a searchable/browsable directory of micro-apps grouped by category (at minimum: AI, Banking, CashApp-like, DAOs, LinkedIn-like, Messaging, NNS, OpenChat-like, OpenClaw-like, Reddit-like, Social Media) and include additional best-of-breed categories beyond the initial list.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "create a website which serves up links to many multiple functionality micro-apps or subsites",
+          "Examples of micro-apps or subsites are replicas ... AI, Banking, CashApp, DAOs, LinkedIn, Messaging, NNS, OpenChat, OpenClaw, Reddit, Social Media.",
+          "Also fill in with many more categories with BestOfBreed apps"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Landing page shows a clear portal hub with navigation into a micro-app directory",
+        "Directory supports filtering by category and text search",
+        "At least the user-listed categories are present, plus at least 6 additional categories (e.g., Payments, Marketplace, Customer Support, Events, Knowledge Base, Analytics, Forms/Surveys, File Sharing)",
+        "Each micro-app card shows: name, short description, category, and an icon"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a consistent, fun, playful, color-coded UI system for micro-app cards and navigation, using simple layouts suitable for broad age ranges. Ensure each micro-app category has a consistent color and icon style.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "easy to use and with fun & playful icons",
+          "They're functionally driven, color coded and simple enough for great adoption by all ages of users worldwide."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Micro-app categories are visually distinguishable via consistent category colors",
+        "All micro-app tiles/cards use a unified style system (typography, spacing, hover states)",
+        "UI remains readable and usable on mobile and desktop"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a coherent visual theme for the portal (colors, typography, layout) and apply it consistently across all screens. Avoid using a blue/purple primary palette.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "create a website which serves up links to many multiple functionality micro-apps"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is documented in-code (e.g., a small design/tokens section) and applied across core pages",
+        "Primary palette is not blue/purple",
+        "All pages share consistent header/navigation patterns"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add routing and page shells for micro-apps so that each directory item opens a dedicated micro-app page (even if functionality is minimal initially). Include at least 6 starter micro-app shells inspired by the requested domains (e.g., simple social feed, basic messaging inbox UI, DAO proposals list, lightweight forum, basic vendor marketplace listing, basic AI prompt playground UI) without claiming to replicate external products.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Examples of micro-apps ... replicas of the many of the best Web2 and Web3 apps",
+          "Where replicas are available ... please clone them for us, then modify them"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking a micro-app card navigates to a dedicated route/page for that micro-app",
+        "At least 6 starter micro-app pages exist with basic UI and placeholder content to demonstrate navigation and layout",
+        "Portal navigation allows returning to the directory easily"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement Internet Identity login and a shared identity layer in the app so all micro-app pages can access the authenticated user principal and display signed-in state.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "run well on the ICP using all the very best of its benefits and features",
+          "multi-user"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can sign in and sign out with Internet Identity",
+        "UI shows authenticated state (e.g., principal or user handle) in a header/menu",
+        "Backend exposes an endpoint that returns the caller principal to verify end-to-end auth wiring"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement multi-organization (multi-tenant) support with the ability to create an organization, join an organization, and select an active organization context for all micro-app interactions.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "They're all multi-lingual, multi-organizational, multi-user with support for multi-vendor"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores organizations and organization membership",
+        "Frontend supports creating an organization and selecting an active organization",
+        "All micro-app pages display the active organization context",
+        "Access to org-scoped data is restricted to members of that organization"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Implement role-based access control with at least three roles: Owner, Admin, User. Provide basic privacy controls by enforcing role checks on sensitive endpoints and pages (e.g., dashboards/metrics).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Owner, Admin and User permissioned for privacy with appropriate dashboards"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend defines roles and enforces role checks for protected operations",
+        "Frontend hides/disables admin/owner-only actions when user lacks permission",
+        "At least one admin-only page and one owner-only action are protected end-to-end"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Provide an Admin/Owner dashboard area with basic metrics and reporting across the portal and micro-app usage (e.g., counts of orgs, users, micro-app visits/opens, and recent activity). Ensure metrics are scoped by organization where appropriate.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "dashboards for those assigned to have access to metrics for instant reporter capabilities"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dashboard route exists and is accessible only to Admin/Owner per org",
+        "Backend tracks and returns basic metrics (at minimum: total orgs, total users, per-org members, per-micro-app open counts)",
+        "Frontend displays metrics clearly with simple charts or tables"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Implement a shared backend API layer that micro-app pages use for common capabilities (identity, org context, roles, and basic activity logging) to enable future interoperability between micro-apps.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "They all integrate well with each other via APIs that you've created"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes shared endpoints for: current user, org CRUD/membership, role management, activity/event logging, and metrics retrieval",
+        "At least two starter micro-app pages call the shared activity logging API when opened/used",
+        "API responses are stable and documented via types/interfaces in code"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add multilingual infrastructure for all user-facing text (English as the default) and demonstrate at least one additional locale toggle with partial translations for core navigation and directory screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "They're all multi-lingual"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App has a language selector",
+        "English is the default locale",
+        "At least one additional locale is available with translations for key navigation labels and directory UI",
+        "All new user-facing strings are routed through the i18n system (no hard-coded UI strings outside the i18n setup)"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Add a vendors model to support “multi-vendor” scenarios: allow an organization to create and manage vendor profiles and associate them to relevant micro-app experiences (e.g., marketplace listing shell).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "support for multi-vendor"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend supports vendor CRUD scoped to an organization",
+        "Frontend provides basic vendor management UI for Admin/Owner",
+        "At least one micro-app shell (e.g., marketplace) can list vendors from the backend"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Add a “Pricing & Plans” page that provides guidance content for best-in-class pricing across micro-app categories, presented as editable content stored on the backend (so Admin/Owner can update).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "You'll kindly give us your guidance to the best prices for best experience from various micro-apps"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Pricing & Plans page exists and is linked from the portal",
+        "Backend stores pricing guidance content (per category) and serves it to the frontend",
+        "Admin/Owner can edit and save pricing guidance content via a simple form",
+        "Default content is in English and clearly labeled as guidance"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Add generated static image assets (playful category icons + a simple portal hero graphic) and render them in the portal UI (directory cards, category headers, and landing hero). Store generated images under frontend/public/assets/generated and reference them directly from the frontend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "fun & playful icons for best engagement of users"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated",
+        "Directory cards display the correct icon for their category",
+        "Landing page includes the hero image",
+        "No backend endpoints are used to serve these images"
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo); add backend/migration.mo only if an upgrade-safe state migration is required.",
+    "Do not edit any frontend files under the immutable paths listed in SYSTEM_CONTEXT (compose existing UI components instead).",
+    "Use English for any user-facing text by default (i18n may add other locales, but English must remain complete).",
+    "Do not rely on external databases, external authentication providers (other than Internet Identity), WebSockets, or third-party social APIs."
+  ],
+  "nonGoals": [
+    "Building full replicas/clones of named Web2/Web3 products; only provide inspired starter micro-app shells and a scalable portal foundation.",
+    "Implementing real-time chat/messaging via WebSockets or push notifications.",
+    "Integrating third-party wallets like MetaMask/WalletConnect or external blockchain wallets.",
+    "Implementing payments processing or fiat on/off-ramp integrations in this iteration."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Portal hero illustration in a playful flat style with varied warm colors (portal-hero.dim_1600x600.png)",
+      "Playful flat icon for AI category (icon-ai.dim_256x256.png)",
+      "Playful flat icon for Banking category (icon-banking.dim_256x256.png)",
+      "Playful flat icon for Payments/CashApp-like category (icon-payments.dim_256x256.png)",
+      "Playful flat icon for DAO/Governance category (icon-dao.dim_256x256.png)",
+      "Playful flat icon for Professional network/LinkedIn-like category (icon-network.dim_256x256.png)",
+      "Playful flat icon for Messaging category (icon-messaging.dim_256x256.png)",
+      "Playful flat icon for Forums/Reddit-like category (icon-forums.dim_256x256.png)",
+      "Playful flat icon for Social Media category (icon-social.dim_256x256.png)",
+      "Playful flat icon for Marketplace/Vendors category (icon-marketplace.dim_256x256.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [
+      "Build an ICP-hosted portal that links to an integrated suite of micro-apps with multi-tenant RBAC, multilingual UI, shared APIs, and admin metrics dashboards."
+    ],
+    "goalsToRemove": [],
+    "preferencesToAdd": [
+      "Default all user-facing text to English; support i18n for additional locales.",
+      "Use a playful, color-coded visual style with simple layouts and fun icons (avoid blue/purple primary palette)."
+    ],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

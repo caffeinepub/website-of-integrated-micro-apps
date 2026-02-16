@@ -1,0 +1,81 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T23:07:27.330Z",
+  "summary": "Diff adds a portal frontend with routing, directory catalog, theme tokens (warm palette), i18n (en/es), II auth hook integration, org switcher, basic RBAC gating component, and a Motoko backend actor with org/vendor/pricing/activity/profile models and endpoints (truncated). Key gaps remain around required directory categories and strict i18n string usage; also an unrequested “secret admin token” access-control initialization appears.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Directory must include at minimum: AI, Banking, CashApp-like, DAOs, LinkedIn-like, Messaging, NNS, OpenChat-like, OpenClaw-like, Reddit-like, Social Media (plus additional categories).",
+      "reason": "The declared category union and catalog entries shown do not include NNS, OpenChat-like, OpenClaw-like, or Reddit-like categories/apps; “CashApp-like” appears as generic payments, and “LinkedIn-like” appears as 'network', but the explicitly named minimum set is not fully present in evidence provided.",
+      "evidence": [
+        "frontend/src/catalog/microAppsCatalog.ts"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "All new user-facing strings must be routed through the i18n system (no hard-coded UI strings outside i18n setup).",
+      "reason": "Multiple user-facing strings are hard-coded directly in components/pages (toasts, buttons, headings, table headers, empty states, access-denied copy), rather than using t('...') keys.",
+      "evidence": [
+        "frontend/src/components/OrgSwitcher.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/components/RequireRole.tsx",
+        "frontend/src/components/MicroAppCard.tsx",
+        "frontend/src/pages/AdminDashboardPage.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Secret URL parameter-based admin/access-control initialization (caffeineAdminToken) used to call a backend _initializeAccessControlWithSecret method.",
+      "reason": "BuildRequest does not request any secret-token admin bootstrap/backdoor mechanism; it only specifies Internet Identity auth + RBAC.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/catalog/microAppsCatalog.ts",
+    "frontend/src/components/CategoryBadge.tsx",
+    "frontend/src/components/LanguageSelector.tsx",
+    "frontend/src/components/LoginButton.tsx",
+    "frontend/src/components/MicroAppCard.tsx",
+    "frontend/src/components/OrgSwitcher.tsx",
+    "frontend/src/components/PortalLayout.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/RequireRole.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/i18n/index.ts",
+    "frontend/src/i18n/locales/en.ts",
+    "frontend/src/i18n/locales/es.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/AdminDashboardPage.tsx",
+    "frontend/src/pages/MicroAppDirectoryPage.tsx",
+    "frontend/src/pages/OrganizationManagementPage.tsx",
+    "frontend/src/pages/PortalHomePage.tsx",
+    "frontend/src/pages/PricingPlansPage.tsx",
+    "frontend/src/pages/VendorManagementPage.tsx",
+    "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx",
+    "frontend/src/pages/microapps/DaoProposalsShell.tsx",
+    "frontend/src/pages/microapps/ForumShell.tsx",
+    "frontend/src/pages/microapps/MarketplaceShell.tsx",
+    "frontend/src/pages/microapps/MessagingInboxShell.tsx",
+    "frontend/src/pages/microapps/MicroAppShellPage.tsx",
+    "frontend/src/pages/microapps/SocialFeedShell.tsx",
+    "frontend/src/theme/categoryTheme.ts",
+    "frontend/src/theme/tokens.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

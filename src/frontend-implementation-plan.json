@@ -1,0 +1,489 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "ICP micro-app portal frontend: directory hub, playful theming, routing shells, II auth UI, org context, RBAC UI, dashboards, vendors, pricing, i18n, and generated assets",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a portal landing + searchable, category-grouped micro-app directory with cards (name, description, category, icon) including required and additional best-of-breed categories.",
+      "acceptanceCriteria": [
+        "Landing page shows a clear portal hub with navigation into a micro-app directory",
+        "Directory supports filtering by category and text search",
+        "At least the user-listed categories are present, plus at least 6 additional categories (e.g., Payments, Marketplace, Customer Support, Events, Knowledge Base, Analytics, Forms/Surveys, File Sharing)",
+        "Each micro-app card shows: name, short description, category, and an icon"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/catalog/microAppsCatalog.ts",
+          "operation": "create",
+          "description": "Define the micro-app directory data model and seed entries grouped by category (include all required categories plus at least 6 additional best-of-breed categories), including per-app route slug, display name, short description, category, and icon key."
+        },
+        {
+          "path": "frontend/src/pages/PortalHomePage.tsx",
+          "operation": "create",
+          "description": "Create the portal-style landing page that introduces the hub and provides an obvious call-to-action linking to the directory."
+        },
+        {
+          "path": "frontend/src/pages/MicroAppDirectoryPage.tsx",
+          "operation": "create",
+          "description": "Implement the directory screen with text search and category filter UI, and a browsable grouped layout driven by the catalog."
+        },
+        {
+          "path": "frontend/src/components/MicroAppCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable micro-app card component that renders name, short description, category label, and category icon, and supports click-through navigation to the micro-app route. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Wire PortalHomePage and MicroAppDirectoryPage into the app routing and top-level navigation so users can reach the directory from the landing page and return easily."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement a fun, playful, color-coded UI system where each micro-app category has a consistent color and icon style across cards and navigation.",
+      "acceptanceCriteria": [
+        "Micro-app categories are visually distinguishable via consistent category colors",
+        "All micro-app tiles/cards use a unified style system (typography, spacing, hover states)",
+        "UI remains readable and usable on mobile and desktop"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/theme/categoryTheme.ts",
+          "operation": "create",
+          "description": "Define a single source of truth mapping for category -> color tokens + icon asset key, used by cards, badges, and category headers."
+        },
+        {
+          "path": "frontend/src/components/CategoryBadge.tsx",
+          "operation": "create",
+          "description": "Create a compact category badge/pill that applies the category color system consistently and can be reused in cards and page headers. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/components/MicroAppCard.tsx",
+          "operation": "modify",
+          "description": "Apply the shared category theming and unified tile styling (spacing, typography, hover/press states) to the micro-app card, ensuring responsiveness. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/MicroAppDirectoryPage.tsx",
+          "operation": "modify",
+          "description": "Apply consistent playful styles to filtering controls and grouped category sections, using the shared category theme mapping."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add a coherent portal visual theme (non blue/purple primary), document tokens in-code, and ensure consistent header/navigation patterns across screens.",
+      "acceptanceCriteria": [
+        "Theme is documented in-code (e.g., a small design/tokens section) and applied across core pages",
+        "Primary palette is not blue/purple",
+        "All pages share consistent header/navigation patterns"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/theme/tokens.ts",
+          "operation": "create",
+          "description": "Document the portal theme tokens in-code (primary/secondary/surface/text, typography scale, spacing/radius) using a warm, playful palette that avoids blue/purple as primary."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styling entry with theme variables and base typography/layout rules that apply across the app (avoid blue/purple primary)."
+        },
+        {
+          "path": "frontend/src/components/PortalLayout.tsx",
+          "operation": "create",
+          "description": "Create a shared layout shell with a consistent header/navigation area used by all pages (logo/title, directory link, pricing link, dashboard link when allowed, language selector, auth controls). Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap routed pages with the PortalLayout to ensure consistent header/navigation patterns across all screens."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add routing and dedicated page shells for micro-apps, including at least 6 starter micro-app shells inspired by requested domains, with easy navigation back to the directory.",
+      "acceptanceCriteria": [
+        "Clicking a micro-app card navigates to a dedicated route/page for that micro-app",
+        "At least 6 starter micro-app pages exist with basic UI and placeholder content to demonstrate navigation and layout",
+        "Portal navigation allows returning to the directory easily"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/microapps/MicroAppShellPage.tsx",
+          "operation": "create",
+          "description": "Create a generic micro-app shell page that renders a micro-app header (icon, name, category) and placeholder content area, based on the catalog entry."
+        },
+        {
+          "path": "frontend/src/pages/microapps/SocialFeedShell.tsx",
+          "operation": "create",
+          "description": "Implement a starter micro-app shell: simple social feed UI layout with placeholder posts and basic interaction affordances (non-functional). Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/MessagingInboxShell.tsx",
+          "operation": "create",
+          "description": "Implement a starter micro-app shell: basic messaging inbox UI layout with placeholder threads/messages (non-real-time). Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/DaoProposalsShell.tsx",
+          "operation": "create",
+          "description": "Implement a starter micro-app shell: DAO proposals list UI with placeholder proposals and status badges. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/ForumShell.tsx",
+          "operation": "create",
+          "description": "Implement a starter micro-app shell: lightweight forum UI (topic list + thread view mock) with placeholder content. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/MarketplaceShell.tsx",
+          "operation": "create",
+          "description": "Implement a starter micro-app shell: vendor marketplace listing UI that can later be connected to org-scoped vendors; include placeholder state and a listing layout. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx",
+          "operation": "create",
+          "description": "Implement a starter micro-app shell: basic AI prompt playground UI (prompt input, response area, history list) with placeholder behavior (no external APIs). Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/components/MicroAppCard.tsx",
+          "operation": "modify",
+          "description": "Ensure card click navigates to the associated micro-app dedicated route using the app router and catalog slug mapping."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register routes for each starter micro-app shell and a generic fallback micro-app shell route; ensure directory links and back navigation are present."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add Internet Identity login UI and a shared identity layer so micro-app pages can access the authenticated principal and display signed-in state.",
+      "acceptanceCriteria": [
+        "User can sign in and sign out with Internet Identity",
+        "UI shows authenticated state (e.g., principal or user handle) in a header/menu",
+        "Backend exposes an endpoint that returns the caller principal to verify end-to-end auth wiring"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginButton.tsx",
+          "operation": "create",
+          "description": "Implement a Login/Logout button using the selected authorization component guidance with Internet Identity; clear cached app data on logout. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUserProfile.ts",
+          "operation": "create",
+          "description": "Create a React Query hook that loads the current user profile (and exposes loading/fetched state) using the backend interface methods and the selected authorization component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Prompt first-time authenticated users to set a human-readable name (and optional email if desired by UI) and persist via backend; prevent modal flash using the selected authorization component guidance. Verify the component's usage instructions before implementing (shadcn-ui + authorization)."
+        },
+        {
+          "path": "frontend/src/components/PortalLayout.tsx",
+          "operation": "modify",
+          "description": "Display signed-in state in the header using the user profile name (avoid showing raw principal), and include LoginButton + ProfileSetupModal integration. Verify the component's usage instructions before implementing (authorization)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/MicroAppShellPage.tsx",
+          "operation": "modify",
+          "description": "Read authenticated identity/profile context and display signed-in state within micro-app shells (e.g., header subtitle) to demonstrate shared identity access."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Provide multi-organization support in the UI: create org, join org, select active org context, and show the active org on all micro-app pages.",
+      "acceptanceCriteria": [
+        "Backend stores organizations and organization membership",
+        "Frontend supports creating an organization and selecting an active organization",
+        "All micro-app pages display the active organization context",
+        "Access to org-scoped data is restricted to members of that organization"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useOrganizations.ts",
+          "operation": "create",
+          "description": "Create hooks to list organizations, create an organization, join an organization, and fetch the selected org details using backend capabilities; include local persistence of active org selection via user profile updates."
+        },
+        {
+          "path": "frontend/src/components/OrgSwitcher.tsx",
+          "operation": "create",
+          "description": "Add an organization selector UI (list + active selection) and actions to create/join an org; show current active org context in the header. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/OrganizationManagementPage.tsx",
+          "operation": "create",
+          "description": "Create an organization management screen that supports creating and joining organizations and selecting the active organization."
+        },
+        {
+          "path": "frontend/src/components/PortalLayout.tsx",
+          "operation": "modify",
+          "description": "Integrate OrgSwitcher into the global header so active organization context is visible and changeable across the portal. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/MicroAppShellPage.tsx",
+          "operation": "modify",
+          "description": "Display active organization context on each micro-app page (e.g., an org badge/label) and gate org-scoped UI when no active org is selected."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a route/link to OrganizationManagementPage from the portal navigation, and ensure key pages can require an active organization where appropriate."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add RBAC UI with Owner/Admin/User roles: hide/disable protected actions, and protect at least one admin-only page and one owner-only action in the UI.",
+      "acceptanceCriteria": [
+        "Backend defines roles and enforces role checks for protected operations",
+        "Frontend hides/disables admin/owner-only actions when user lacks permission",
+        "At least one admin-only page and one owner-only action are protected end-to-end"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useRbac.ts",
+          "operation": "create",
+          "description": "Create a role-loading hook that queries the caller role (and org-scoped role when an active org is selected) and exposes helper booleans for Admin/Owner/User UI gating. Verify the component's usage instructions before implementing (authorization)."
+        },
+        {
+          "path": "frontend/src/components/RequireRole.tsx",
+          "operation": "create",
+          "description": "Create a route/page guard wrapper that blocks access (or shows an access denied screen) unless the user has the required role for the active org context. Verify the component's usage instructions before implementing (authorization)."
+        },
+        {
+          "path": "frontend/src/pages/AdminDashboardPage.tsx",
+          "operation": "create",
+          "description": "Create an admin-only dashboard page route and wrap it with RequireRole to restrict to Admin/Owner. Verify the component's usage instructions before implementing (authorization + shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/pages/VendorManagementPage.tsx",
+          "operation": "create",
+          "description": "Create a vendor management page with an owner-only action (e.g., deactivating a vendor) and gate the action in the UI based on role checks. Verify the component's usage instructions before implementing (authorization + shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register RBAC-protected routes and conditionally render navigation links/actions based on role state (hide dashboard for non-admin/owner; hide owner-only actions)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Create an Admin/Owner dashboard UI that shows basic portal and micro-app usage metrics scoped to organization where appropriate.",
+      "acceptanceCriteria": [
+        "Dashboard route exists and is accessible only to Admin/Owner per org",
+        "Backend tracks and returns basic metrics (at minimum: total orgs, total users, per-org members, per-micro-app open counts)",
+        "Frontend displays metrics clearly with simple charts or tables"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useDashboardMetrics.ts",
+          "operation": "create",
+          "description": "Create a metrics-loading hook using backend capabilities and React Query, with loading/error states suitable for a protected admin dashboard."
+        },
+        {
+          "path": "frontend/src/pages/AdminDashboardPage.tsx",
+          "operation": "modify",
+          "description": "Render the dashboard metrics in a clear, simple table and/or small chart-like summaries (without external chart dependencies unless already available); scope display to active organization context where appropriate. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/components/PortalLayout.tsx",
+          "operation": "modify",
+          "description": "Add a conditional navigation entry to the dashboard for Admin/Owner only and show active org context clearly while on the dashboard. Verify the component's usage instructions before implementing (authorization)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add i18n infrastructure with English default and at least one additional locale toggle, translating key navigation and directory screens with no hard-coded UI strings outside i18n setup.",
+      "acceptanceCriteria": [
+        "App has a language selector",
+        "English is the default locale",
+        "At least one additional locale is available with translations for key navigation labels and directory UI",
+        "All new user-facing strings are routed through the i18n system (no hard-coded UI strings outside the i18n setup)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/i18n/index.ts",
+          "operation": "create",
+          "description": "Implement a lightweight i18n system (dictionary-based) with a translation function, locale state, and defaults (English complete)."
+        },
+        {
+          "path": "frontend/src/i18n/locales/en.ts",
+          "operation": "create",
+          "description": "Add the complete English dictionary for core navigation, landing, directory, org management, dashboard labels, and common UI actions."
+        },
+        {
+          "path": "frontend/src/i18n/locales/es.ts",
+          "operation": "create",
+          "description": "Add a partial additional locale (e.g., Spanish) translating core navigation labels and directory UI."
+        },
+        {
+          "path": "frontend/src/components/LanguageSelector.tsx",
+          "operation": "create",
+          "description": "Create a language selector control in the header to toggle locales. Verify the component's usage instructions before implementing (shadcn-ui)."
+        },
+        {
+          "path": "frontend/src/components/PortalLayout.tsx",
+          "operation": "modify",
+          "description": "Integrate LanguageSelector into the global header and route all visible header text through the i18n translation function."
+        },
+        {
+          "path": "frontend/src/pages/PortalHomePage.tsx",
+          "operation": "modify",
+          "description": "Replace user-facing strings with i18n keys; ensure English remains complete."
+        },
+        {
+          "path": "frontend/src/pages/MicroAppDirectoryPage.tsx",
+          "operation": "modify",
+          "description": "Replace user-facing strings (search placeholder, filter labels, category section labels) with i18n keys; ensure English remains complete."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Add multi-vendor UI: vendor profiles management for Admin/Owner and show vendors in the marketplace micro-app shell.",
+      "acceptanceCriteria": [
+        "Backend supports vendor CRUD scoped to an organization",
+        "Frontend provides basic vendor management UI for Admin/Owner",
+        "At least one micro-app shell (e.g., marketplace) can list vendors from the backend"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useVendors.ts",
+          "operation": "create",
+          "description": "Create vendor hooks to list active vendors by active org, create vendor, and deactivate vendor using backend capabilities; include permission-aware error handling."
+        },
+        {
+          "path": "frontend/src/pages/VendorManagementPage.tsx",
+          "operation": "modify",
+          "description": "Implement vendor management UI (list, create form, deactivate action) scoped to active org; ensure actions are hidden/disabled for users without Admin/Owner. Verify the component's usage instructions before implementing (shadcn-ui + authorization)."
+        },
+        {
+          "path": "frontend/src/pages/microapps/MarketplaceShell.tsx",
+          "operation": "modify",
+          "description": "Load and render the active organization's vendor list from backend capabilities (with empty-state handling) to demonstrate multi-vendor integration."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire VendorManagementPage into routing and navigation (visible only to Admin/Owner), keeping it non-public for standard users."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Add a Pricing & Plans page that shows pricing guidance per category from backend-stored content and allows Admin/Owner to edit and save.",
+      "acceptanceCriteria": [
+        "Pricing & Plans page exists and is linked from the portal",
+        "Backend stores pricing guidance content (per category) and serves it to the frontend",
+        "Admin/Owner can edit and save pricing guidance content via a simple form",
+        "Default content is in English and clearly labeled as guidance"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/usePricingPlans.ts",
+          "operation": "create",
+          "description": "Create hooks to load published plans and (for Admin/Owner) list all plans and save updates via backend capabilities; handle loading/error states cleanly."
+        },
+        {
+          "path": "frontend/src/pages/PricingPlansPage.tsx",
+          "operation": "create",
+          "description": "Implement Pricing & Plans UI showing category-grouped guidance content; include an Admin/Owner-only edit form to create/update guidance. Verify the component's usage instructions before implementing (shadcn-ui + authorization)."
+        },
+        {
+          "path": "frontend/src/components/PortalLayout.tsx",
+          "operation": "modify",
+          "description": "Add a persistent navigation link to Pricing & Plans for all users (public guidance), while showing edit controls only for Admin/Owner. Verify the component's usage instructions before implementing (authorization)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the PricingPlansPage route and ensure it is reachable from the portal navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Add and render the required generated static images for the portal hero and category icons, stored under frontend/public/assets/generated and referenced directly in the UI.",
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated",
+        "Directory cards display the correct icon for their category",
+        "Landing page includes the hero image",
+        "No backend endpoints are used to serve these images"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/portal-hero.dim_1600x600.png",
+          "operation": "create",
+          "description": "Add the generated portal hero illustration asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-ai.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated AI category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-banking.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated Banking category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-payments.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated Payments/CashApp-like category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-dao.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated DAO/Governance category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-network.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated Professional network/LinkedIn-like category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-messaging.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated Messaging category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-forums.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated Forums/Reddit-like category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-social.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated Social Media category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-marketplace.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated Marketplace/Vendors category icon asset at this exact path and filename for static serving."
+        },
+        {
+          "path": "frontend/src/theme/categoryTheme.ts",
+          "operation": "modify",
+          "description": "Map category icon keys to the exact generated asset filenames under frontend/public/assets/generated (including .dim_256x256 in filenames) for consistent directory card and header rendering."
+        },
+        {
+          "path": "frontend/src/pages/PortalHomePage.tsx",
+          "operation": "modify",
+          "description": "Render the hero image from frontend/public/assets/generated/portal-hero.dim_1600x600.png within the landing hero section."
+        },
+        {
+          "path": "frontend/src/components/MicroAppCard.tsx",
+          "operation": "modify",
+          "description": "Render category icons on directory cards using the generated icon assets under frontend/public/assets/generated; ensure no backend image serving is introduced."
+        }
+      ]
+    }
+  ]
+}

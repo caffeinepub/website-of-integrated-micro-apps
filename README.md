@@ -1,2 +1,3 @@
-# website-of-integrated-micro-apps
-Exported from Caffeine project: Website Of Integrated Micro-apps
+## Website Of Integrated Micro-apps
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`
