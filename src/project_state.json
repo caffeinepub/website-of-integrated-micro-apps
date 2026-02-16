@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 7,
   "summary": "Build a portal website on ICP that hosts/links to an integrated suite of micro-apps/subsites (inspired by best-of-breed Web2/Web3 apps). Micro-apps should be easy to use with playful color-coded icons, support multilingual + multi-tenant orgs/users/vendors, integrate via shared APIs, include multi-wallet support, and provide owner/admin/user permissions with dashboards/metrics. Provide guidance on best-in-class pricing for offered services.",
   "architectural_notes": [
     "Target deployment/platform: Internet Computer Protocol (ICP).",
@@ -9,11 +9,11 @@
     "Include multi-wallet capabilities for Web3 flows.",
     "Access control model: Owner/Admin/User RBAC with privacy controls.",
     "Provide role-based dashboards/metrics for reporting.",
-    "Internationalization required (multilingual UI/content)."
+    "Internationalization required (multilingual UI/content).",
+    "User approved proceeding with implementing the shared interoperability/backend API layer for identity, org context, roles, and activity logging across all micro-apps (AR-20)."
   ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Portal hero illustration in a playful flat style with varied warm colors (portal-hero.dim_1600x600.png)\n- Playful flat icon for AI category (icon-ai.dim_256x256.png)\n- Playful flat icon for Banking category (icon-banking.dim_256x256.png)\n- Playful flat icon for Payments/CashApp-like category (icon-payments.dim_256x256.png)\n- Playful flat icon for DAO/Governance category (icon-dao.dim_256x256.png)\n- Playful flat icon for Professional network/LinkedIn-like category (icon-network.dim_256x256.png)\n- Playful flat icon for Messaging category (icon-messaging.dim_256x256.png)\n- Playful flat icon for Forums/Reddit-like category (icon-forums.dim_256x256.png)\n- Playful flat icon for Social Media category (icon-social.dim_256x256.png)\n- Playful flat icon for Marketplace/Vendors category (icon-marketplace.dim_256x256.png)",
   "existing_features": [
     {
       "id": "feature-create-a-portal-style-home-experience-that-serves-as-a-hub-for-multiple-micro-apps-subsites-including-a-searchable-browsable-directory-of-micro-apps-grouped-by-category-at-minimum-ai-banking-cashapp-like-daos-linkedin-like-messaging-nns-openchat-like-openclaw-like-reddit-like-social-media-and-include-additional-best-of-breed-categories-beyond-the-initial-list",
@@ -110,6 +110,46 @@
         "REQ-13"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fix-role-lookup-in-the-frontend-so-that-role-checks-use-the-caller-principal-not-the-user-profile-object-and-ensure-role-retrieval-is-consistent-and-reusable-for-all-micro-apps",
+      "title": "Fix role lookup in the frontend so that role checks use the caller principal (not the user profile object) and ensure role retrieval is consistent and reusable for all micro-apps.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-frontend-shared-interoperability-layer-a-dedicated-hook-module-that-centralizes-access-to-the-interoperability-context-profile-active-organization-role-and-provides-a-single-consistent-way-for-micro-app-pages-to-log-activity-with-the-correct-org-context",
+      "title": "Implement a frontend shared interoperability layer (a dedicated hook/module) that centralizes access to the interoperability context (profile, active organization, role) and provides a single, consistent way for micro-app pages to log activity with the correct org context.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-refactor-existing-micro-app-shell-pages-that-currently-manually-combine-user-profile-fetching-activity-logging-so-they-use-the-shared-interoperability-layer-for-determining-org-context-and-logging-app-open-events",
+      "title": "Refactor existing micro-app shell pages that currently manually combine user profile fetching + activity logging so they use the shared interoperability layer for determining org context and logging app open events.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-compact-test-suite-outline-document-for-the-shared-interoperability-layer-that-enumerates-backend-canister-api-tests-for-getinteropcontext-getuserrole-and-logactivity-including-isolation-tests-contract-shape-assertions-multi-tenant-boundary-tests-workflow-chain-tests-and-failure-condition-tests",
+      "title": "Add a compact test suite outline document for the shared interoperability layer that enumerates backend canister API tests for getInteropContext, getUserRole, and logActivity, including isolation tests, contract/shape assertions, multi-tenant boundary tests, workflow-chain tests, and failure-condition tests.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-include-in-the-test-suite-outline-a-minimal-repeatable-manual-test-execution-plan-using-multiple-identities-e-g-separate-local-identities-for-owner-admin-user-to-exercise-the-interoperability-apis-end-to-end-with-concrete-steps-and-expected-outcomes",
+      "title": "Include in the test suite outline a minimal, repeatable manual test execution plan using multiple identities (e.g., separate local identities for owner/admin/user) to exercise the interoperability APIs end-to-end, with concrete steps and expected outcomes.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -185,6 +225,20 @@
       "reqIds": [
         "REQ-9"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add a backend-level shared interoperability API that provides a single query to fetch the caller’s current interoperability context (authenticated principal presence, caller user profile, active organization context, and role for the active organization when available) so micro-apps can interoperate using consistent identity/org/role data.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Create a compact test suite outline for testing the shared interoperability layer (identity, org context, roles, activity logging) including isolation, contract, multi-tenant boundary, workflow-chain, and failure-condition tests",
+      "reqIds": [],
       "status": "pending"
     }
   ],

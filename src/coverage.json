@@ -1,398 +1,45 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T23:07:27.334Z",
+  "generatedAt": "2026-02-16T19:08:43.801Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 13,
-    "implemented": 12,
+    "total": 2,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-1",
-        "summary": "Create a portal-style home experience that serves as a hub for multiple micro-apps/subsites, including a searchable/browsable directory of micro-apps grouped by category (at minimum: AI, Banking, CashApp-like, DAOs, LinkedIn-like, Messaging, NNS, OpenChat-like, OpenClaw-like, Reddit-like, Social Media) and include additional best-of-breed categories beyond the initial list.",
+        "id": "REQ-18",
+        "summary": "Add a compact test suite outline document for the shared interoperability layer that enumerates backend canister API tests for getInteropContext, getUserRole, and logActivity, including isolation tests, contract/shape assertions, multi-tenant boundary tests, workflow-chain tests, and failure-condition tests.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/catalog/microAppsCatalog.ts",
-          "frontend/src/pages/PortalHomePage.tsx",
-          "frontend/src/pages/MicroAppDirectoryPage.tsx",
-          "frontend/src/components/MicroAppCard.tsx",
-          "frontend/src/App.tsx"
+          "frontend/docs/shared-interop-test-suite-outline.md"
         ],
         "matchedFiles": [
-          "frontend/src/catalog/microAppsCatalog.ts",
-          "frontend/src/pages/PortalHomePage.tsx",
-          "frontend/src/pages/MicroAppDirectoryPage.tsx",
-          "frontend/src/components/MicroAppCard.tsx",
-          "frontend/src/App.tsx"
+          "frontend/docs/shared-interop-test-suite-outline.md"
         ]
       },
       {
-        "id": "REQ-10",
-        "summary": "Add multilingual infrastructure for all user-facing text (English as the default) and demonstrate at least one additional locale toggle with partial translations for core navigation and directory screens.",
+        "id": "REQ-19",
+        "summary": "Include in the test suite outline a minimal, repeatable manual test execution plan using multiple identities (e.g., separate local identities for owner/admin/user) to exercise the interoperability APIs end-to-end, with concrete steps and expected outcomes.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/i18n/index.ts",
-          "frontend/src/i18n/locales/en.ts",
-          "frontend/src/i18n/locales/es.ts",
-          "frontend/src/components/LanguageSelector.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/pages/PortalHomePage.tsx",
-          "frontend/src/pages/MicroAppDirectoryPage.tsx"
+          "frontend/docs/shared-interop-test-suite-outline.md"
         ],
         "matchedFiles": [
-          "frontend/src/i18n/index.ts",
-          "frontend/src/i18n/locales/en.ts",
-          "frontend/src/i18n/locales/es.ts",
-          "frontend/src/components/LanguageSelector.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/pages/PortalHomePage.tsx",
-          "frontend/src/pages/MicroAppDirectoryPage.tsx"
+          "frontend/docs/shared-interop-test-suite-outline.md"
         ]
-      },
-      {
-        "id": "REQ-11",
-        "summary": "Add a vendors model to support “multi-vendor” scenarios: allow an organization to create and manage vendor profiles and associate them to relevant micro-app experiences (e.g., marketplace listing shell).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useVendors.ts",
-          "frontend/src/pages/VendorManagementPage.tsx",
-          "frontend/src/pages/microapps/MarketplaceShell.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/VendorManagementPage.tsx",
-          "frontend/src/pages/microapps/MarketplaceShell.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-12",
-        "summary": "Add a “Pricing & Plans” page that provides guidance content for best-in-class pricing across micro-app categories, presented as editable content stored on the backend (so Admin/Owner can update).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/usePricingPlans.ts",
-          "frontend/src/pages/PricingPlansPage.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/PricingPlansPage.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-13",
-        "summary": "Add generated static image assets (playful category icons + a simple portal hero graphic) and render them in the portal UI (directory cards, category headers, and landing hero). Store generated images under frontend/public/assets/generated and reference them directly from the frontend.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/public/assets/generated/portal-hero.dim_1600x600.png",
-          "frontend/public/assets/generated/icon-ai.dim_256x256.png",
-          "frontend/public/assets/generated/icon-banking.dim_256x256.png",
-          "frontend/public/assets/generated/icon-payments.dim_256x256.png",
-          "frontend/public/assets/generated/icon-dao.dim_256x256.png",
-          "frontend/public/assets/generated/icon-network.dim_256x256.png",
-          "frontend/public/assets/generated/icon-messaging.dim_256x256.png",
-          "frontend/public/assets/generated/icon-forums.dim_256x256.png",
-          "frontend/public/assets/generated/icon-social.dim_256x256.png",
-          "frontend/public/assets/generated/icon-marketplace.dim_256x256.png",
-          "frontend/src/theme/categoryTheme.ts",
-          "frontend/src/pages/PortalHomePage.tsx",
-          "frontend/src/components/MicroAppCard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/public/assets/generated/portal-hero.dim_1600x600.png",
-          "frontend/public/assets/generated/icon-ai.dim_256x256.png",
-          "frontend/public/assets/generated/icon-banking.dim_256x256.png",
-          "frontend/public/assets/generated/icon-payments.dim_256x256.png",
-          "frontend/public/assets/generated/icon-dao.dim_256x256.png",
-          "frontend/public/assets/generated/icon-network.dim_256x256.png",
-          "frontend/public/assets/generated/icon-messaging.dim_256x256.png",
-          "frontend/public/assets/generated/icon-forums.dim_256x256.png",
-          "frontend/public/assets/generated/icon-social.dim_256x256.png",
-          "frontend/public/assets/generated/icon-marketplace.dim_256x256.png",
-          "frontend/src/theme/categoryTheme.ts",
-          "frontend/src/pages/PortalHomePage.tsx",
-          "frontend/src/components/MicroAppCard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-2",
-        "summary": "Implement a consistent, fun, playful, color-coded UI system for micro-app cards and navigation, using simple layouts suitable for broad age ranges. Ensure each micro-app category has a consistent color and icon style.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/theme/categoryTheme.ts",
-          "frontend/src/components/CategoryBadge.tsx",
-          "frontend/src/components/MicroAppCard.tsx",
-          "frontend/src/pages/MicroAppDirectoryPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/theme/categoryTheme.ts",
-          "frontend/src/components/CategoryBadge.tsx",
-          "frontend/src/components/MicroAppCard.tsx",
-          "frontend/src/pages/MicroAppDirectoryPage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-3",
-        "summary": "Add a coherent visual theme for the portal (colors, typography, layout) and apply it consistently across all screens. Avoid using a blue/purple primary palette.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/theme/tokens.ts",
-          "frontend/src/index.css",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/theme/tokens.ts",
-          "frontend/src/index.css",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Add routing and page shells for micro-apps so that each directory item opens a dedicated micro-app page (even if functionality is minimal initially). Include at least 6 starter micro-app shells inspired by the requested domains (e.g., simple social feed, basic messaging inbox UI, DAO proposals list, lightweight forum, basic vendor marketplace listing, basic AI prompt playground UI) without claiming to replicate external products.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/microapps/MicroAppShellPage.tsx",
-          "frontend/src/pages/microapps/SocialFeedShell.tsx",
-          "frontend/src/pages/microapps/MessagingInboxShell.tsx",
-          "frontend/src/pages/microapps/DaoProposalsShell.tsx",
-          "frontend/src/pages/microapps/ForumShell.tsx",
-          "frontend/src/pages/microapps/MarketplaceShell.tsx",
-          "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx",
-          "frontend/src/components/MicroAppCard.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/microapps/MicroAppShellPage.tsx",
-          "frontend/src/pages/microapps/SocialFeedShell.tsx",
-          "frontend/src/pages/microapps/MessagingInboxShell.tsx",
-          "frontend/src/pages/microapps/DaoProposalsShell.tsx",
-          "frontend/src/pages/microapps/ForumShell.tsx",
-          "frontend/src/pages/microapps/MarketplaceShell.tsx",
-          "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx",
-          "frontend/src/components/MicroAppCard.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Implement Internet Identity login and a shared identity layer in the app so all micro-app pages can access the authenticated user principal and display signed-in state.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/LoginButton.tsx",
-          "frontend/src/hooks/useCurrentUserProfile.ts",
-          "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/pages/microapps/MicroAppShellPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/LoginButton.tsx",
-          "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/pages/microapps/MicroAppShellPage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-6",
-        "summary": "Implement multi-organization (multi-tenant) support with the ability to create an organization, join an organization, and select an active organization context for all micro-app interactions.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useOrganizations.ts",
-          "frontend/src/components/OrgSwitcher.tsx",
-          "frontend/src/pages/OrganizationManagementPage.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/pages/microapps/MicroAppShellPage.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/OrgSwitcher.tsx",
-          "frontend/src/pages/OrganizationManagementPage.tsx",
-          "frontend/src/components/PortalLayout.tsx",
-          "frontend/src/pages/microapps/MicroAppShellPage.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-7",
-        "summary": "Implement role-based access control with at least three roles: Owner, Admin, User. Provide basic privacy controls by enforcing role checks on sensitive endpoints and pages (e.g., dashboards/metrics).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useRbac.ts",
-          "frontend/src/components/RequireRole.tsx",
-          "frontend/src/pages/AdminDashboardPage.tsx",
-          "frontend/src/pages/VendorManagementPage.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/RequireRole.tsx",
-          "frontend/src/pages/AdminDashboardPage.tsx",
-          "frontend/src/pages/VendorManagementPage.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-8",
-        "summary": "Provide an Admin/Owner dashboard area with basic metrics and reporting across the portal and micro-app usage (e.g., counts of orgs, users, micro-app visits/opens, and recent activity). Ensure metrics are scoped by organization where appropriate.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useDashboardMetrics.ts",
-          "frontend/src/pages/AdminDashboardPage.tsx",
-          "frontend/src/components/PortalLayout.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/AdminDashboardPage.tsx",
-          "frontend/src/components/PortalLayout.tsx"
-        ]
-      },
-      {
-        "id": "REQ-9",
-        "summary": "Implement a shared backend API layer that micro-app pages use for common capabilities (identity, org context, roles, and basic activity logging) to enable future interoperability between micro-apps.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
-    "backend/authorization/MixinAuthorization.mo",
-    "backend/authorization/access-control.mo",
-    "backend/main.mo",
     "build-request.json",
-    "build-template/Dockerfile",
-    "build-template/LICENSE",
-    "build-template/README.md",
-    "build-template/deploy.sh",
-    "build-template/icp.yaml",
-    "build-template/package.json",
-    "build-template/pnpm-lock.yaml",
-    "build-template/pnpm-workspace.yaml",
-    "build-template/scripts/prune-unused-images.js",
-    "build-template/scripts/resize-images.js",
-    "build-template/src/backend/canister.yaml",
-    "build-template/src/backend/system-idl/aaaaa-aa.did",
-    "build-template/src/frontend/canister.yaml",
-    "build-template/src/frontend/components.json",
-    "build-template/src/frontend/env.json",
-    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
-    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
-    "build-template/src/frontend/eslint.config.js",
-    "build-template/src/frontend/package.json",
-    "build-template/src/frontend/postcss.config.js",
-    "build-template/src/frontend/src/components/ui/accordion.tsx",
-    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
-    "build-template/src/frontend/src/components/ui/alert.tsx",
-    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
-    "build-template/src/frontend/src/components/ui/avatar.tsx",
-    "build-template/src/frontend/src/components/ui/badge.tsx",
-    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
-    "build-template/src/frontend/src/components/ui/button.tsx",
-    "build-template/src/frontend/src/components/ui/calendar.tsx",
-    "build-template/src/frontend/src/components/ui/card.tsx",
-    "build-template/src/frontend/src/components/ui/carousel.tsx",
-    "build-template/src/frontend/src/components/ui/chart.tsx",
-    "build-template/src/frontend/src/components/ui/checkbox.tsx",
-    "build-template/src/frontend/src/components/ui/collapsible.tsx",
-    "build-template/src/frontend/src/components/ui/command.tsx",
-    "build-template/src/frontend/src/components/ui/context-menu.tsx",
-    "build-template/src/frontend/src/components/ui/dialog.tsx",
-    "build-template/src/frontend/src/components/ui/drawer.tsx",
-    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
-    "build-template/src/frontend/src/components/ui/form.tsx",
-    "build-template/src/frontend/src/components/ui/hover-card.tsx",
-    "build-template/src/frontend/src/components/ui/input-otp.tsx",
-    "build-template/src/frontend/src/components/ui/input.tsx",
-    "build-template/src/frontend/src/components/ui/label.tsx",
-    "build-template/src/frontend/src/components/ui/menubar.tsx",
-    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
-    "build-template/src/frontend/src/components/ui/pagination.tsx",
-    "build-template/src/frontend/src/components/ui/popover.tsx",
-    "build-template/src/frontend/src/components/ui/progress.tsx",
-    "build-template/src/frontend/src/components/ui/radio-group.tsx",
-    "build-template/src/frontend/src/components/ui/resizable.tsx",
-    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
-    "build-template/src/frontend/src/components/ui/select.tsx",
-    "build-template/src/frontend/src/components/ui/separator.tsx",
-    "build-template/src/frontend/src/components/ui/sheet.tsx",
-    "build-template/src/frontend/src/components/ui/sidebar.tsx",
-    "build-template/src/frontend/src/components/ui/skeleton.tsx",
-    "build-template/src/frontend/src/components/ui/slider.tsx",
-    "build-template/src/frontend/src/components/ui/sonner.tsx",
-    "build-template/src/frontend/src/components/ui/switch.tsx",
-    "build-template/src/frontend/src/components/ui/table.tsx",
-    "build-template/src/frontend/src/components/ui/tabs.tsx",
-    "build-template/src/frontend/src/components/ui/textarea.tsx",
-    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
-    "build-template/src/frontend/src/components/ui/toggle.tsx",
-    "build-template/src/frontend/src/components/ui/tooltip.tsx",
-    "build-template/src/frontend/src/hooks/use-mobile.tsx",
-    "build-template/src/frontend/src/lib/utils.ts",
-    "build-template/src/frontend/tsconfig.json",
-    "build-template/src/frontend/vite.config.js",
-    "build-template/tsconfig.json",
-    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/public/assets/generated/icon-ai.dim_256x256.png",
-    "frontend/public/assets/generated/icon-banking.dim_256x256.png",
-    "frontend/public/assets/generated/icon-dao.dim_256x256.png",
-    "frontend/public/assets/generated/icon-forums.dim_256x256.png",
-    "frontend/public/assets/generated/icon-marketplace.dim_256x256.png",
-    "frontend/public/assets/generated/icon-messaging.dim_256x256.png",
-    "frontend/public/assets/generated/icon-network.dim_256x256.png",
-    "frontend/public/assets/generated/icon-payments.dim_256x256.png",
-    "frontend/public/assets/generated/icon-social.dim_256x256.png",
-    "frontend/public/assets/generated/portal-hero.dim_1600x600.png",
-    "frontend/src/App.tsx",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/catalog/microAppsCatalog.ts",
-    "frontend/src/components/CategoryBadge.tsx",
-    "frontend/src/components/LanguageSelector.tsx",
-    "frontend/src/components/LoginButton.tsx",
-    "frontend/src/components/MicroAppCard.tsx",
-    "frontend/src/components/OrgSwitcher.tsx",
-    "frontend/src/components/PortalLayout.tsx",
-    "frontend/src/components/ProfileSetupModal.tsx",
-    "frontend/src/components/RequireRole.tsx",
-    "frontend/src/config.ts",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/i18n/index.ts",
-    "frontend/src/i18n/locales/en.ts",
-    "frontend/src/i18n/locales/es.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
-    "frontend/src/pages/AdminDashboardPage.tsx",
-    "frontend/src/pages/MicroAppDirectoryPage.tsx",
-    "frontend/src/pages/OrganizationManagementPage.tsx",
-    "frontend/src/pages/PortalHomePage.tsx",
-    "frontend/src/pages/PricingPlansPage.tsx",
-    "frontend/src/pages/VendorManagementPage.tsx",
-    "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx",
-    "frontend/src/pages/microapps/DaoProposalsShell.tsx",
-    "frontend/src/pages/microapps/ForumShell.tsx",
-    "frontend/src/pages/microapps/MarketplaceShell.tsx",
-    "frontend/src/pages/microapps/MessagingInboxShell.tsx",
-    "frontend/src/pages/microapps/MicroAppShellPage.tsx",
-    "frontend/src/pages/microapps/SocialFeedShell.tsx",
-    "frontend/src/theme/categoryTheme.ts",
-    "frontend/src/theme/tokens.ts",
-    "frontend/src/ui-summary.json",
-    "frontend/src/utils/StorageClient.ts",
-    "frontend/src/utils/urlParams.ts",
-    "frontend/tailwind.config.js",
+    "frontend/docs/shared-interop-test-suite-outline.md",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

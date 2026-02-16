@@ -20,6 +20,13 @@ export interface ActivityLog {
   'eventType' : string,
 }
 export type AppId = bigint;
+export interface InteropContext {
+  'userRole' : [] | [UserRole],
+  'activeOrg' : [] | [OrgId],
+  'caller' : Principal,
+  'authenticated' : boolean,
+  'profile' : [] | [UserProfile],
+}
 export type OrgId = bigint;
 export interface PricingPlan {
   'id' : OrgId,
@@ -69,6 +76,7 @@ export interface _SERVICE {
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole__1>,
   'getDashboardMetrics' : ActorMethod<[], [bigint, bigint, bigint, bigint]>,
+  'getInteropContext' : ActorMethod<[], InteropContext>,
   'getOrganization' : ActorMethod<
     [OrgId],
     {

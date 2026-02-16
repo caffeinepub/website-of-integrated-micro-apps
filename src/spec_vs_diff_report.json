@@ -1,81 +1,53 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T23:07:27.330Z",
-  "summary": "Diff adds a portal frontend with routing, directory catalog, theme tokens (warm palette), i18n (en/es), II auth hook integration, org switcher, basic RBAC gating component, and a Motoko backend actor with org/vendor/pricing/activity/profile models and endpoints (truncated). Key gaps remain around required directory categories and strict i18n string usage; also an unrequested “secret admin token” access-control initialization appears.",
+  "generatedAt": "2026-02-16T19:08:43.797Z",
+  "summary": "The diff partially adds the requested markdown outline document, but the added file content is truncated and does not provide enough visible evidence that the required explicit test cases, multi-tenant/workflow/failure scenarios, and the manual multi-identity execution plan are actually included. Additionally, several frontend code changes appear that were not requested by REQ-18/REQ-19.",
   "missing_requirements": [
     {
-      "id": "REQ-1",
-      "requirement": "Directory must include at minimum: AI, Banking, CashApp-like, DAOs, LinkedIn-like, Messaging, NNS, OpenChat-like, OpenClaw-like, Reddit-like, Social Media (plus additional categories).",
-      "reason": "The declared category union and catalog entries shown do not include NNS, OpenChat-like, OpenClaw-like, or Reddit-like categories/apps; “CashApp-like” appears as generic payments, and “LinkedIn-like” appears as 'network', but the explicitly named minimum set is not fully present in evidence provided.",
+      "id": "REQ-18",
+      "requirement": "Add a compact test suite outline document for the shared interoperability layer enumerating API tests for getInteropContext, getUserRole, and logActivity including isolation tests, contract/shape assertions, multi-tenant boundary tests, workflow-chain tests, and failure-condition tests with the specified explicit scenarios.",
+      "reason": "While a new markdown file exists and begins an outline, the visible content only shows the title, overview, and the start of one isolation test (Anonymous/No Profile). The diff content is truncated before any explicit coverage for the required getInteropContext cases (no active org, active org, role resolution), logActivity cases, multi-tenant boundaries, workflow-chain scenarios, and failure-condition tests can be verified.",
       "evidence": [
-        "frontend/src/catalog/microAppsCatalog.ts"
+        "frontend/docs/shared-interop-test-suite-outline.md"
       ]
     },
     {
-      "id": "REQ-10",
-      "requirement": "All new user-facing strings must be routed through the i18n system (no hard-coded UI strings outside i18n setup).",
-      "reason": "Multiple user-facing strings are hard-coded directly in components/pages (toasts, buttons, headings, table headers, empty states, access-denied copy), rather than using t('...') keys.",
+      "id": "REQ-19",
+      "requirement": "Include a minimal, repeatable manual test execution plan using multiple identities with concrete steps, preconditions, expected observations, and referencing exact backend methods (getInteropContext, saveCallerUserProfile, createOrganization, joinOrganization, getUserRole, logActivity) only.",
+      "reason": "The added markdown content shown does not include (within the visible/truncated portion) a manual execution plan, multiple-identity steps, or the required explicit method references and expected outputs/observations. Therefore implementation cannot be confirmed from the provided diff excerpt.",
       "evidence": [
-        "frontend/src/components/OrgSwitcher.tsx",
-        "frontend/src/components/ProfileSetupModal.tsx",
-        "frontend/src/components/RequireRole.tsx",
-        "frontend/src/components/MicroAppCard.tsx",
-        "frontend/src/pages/AdminDashboardPage.tsx"
+        "frontend/docs/shared-interop-test-suite-outline.md"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Secret URL parameter-based admin/access-control initialization (caffeineAdminToken) used to call a backend _initializeAccessControlWithSecret method.",
-      "reason": "BuildRequest does not request any secret-token admin bootstrap/backdoor mechanism; it only specifies Internet Identity auth + RBAC.",
+      "description": "Implemented/modified frontend shared interoperability hook and related org-aware logging helpers.",
+      "reason": "REQ-18/REQ-19 only request adding a markdown test-suite outline document; no frontend functionality changes were requested.",
       "evidence": [
-        "frontend/src/hooks/useActor.ts"
+        "frontend-file-summaries.txt (mentions frontend/src/hooks/useInteropContext.ts)"
+      ]
+    },
+    {
+      "description": "Modified frontend React Query hooks and role-based access component behavior to use shared interoperability context and updated role querying.",
+      "reason": "Not requested by REQ-18/REQ-19, which are documentation-only requirements.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/hooks/useQueries.ts, frontend/src/components/RequireRole.tsx)"
+      ]
+    },
+    {
+      "description": "Updated multiple micro-app shell pages to use the shared interoperability layer for activity logging.",
+      "reason": "Not requested by REQ-18/REQ-19.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/pages/microapps/MessagingInboxShell.tsx, frontend/src/pages/microapps/SocialFeedShell.tsx)"
       ]
     }
   ],
-  "confidence": 0.74,
+  "confidence": 0.68,
   "changed_files": [
-    "all_files_summary.json",
-    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/catalog/microAppsCatalog.ts",
-    "frontend/src/components/CategoryBadge.tsx",
-    "frontend/src/components/LanguageSelector.tsx",
-    "frontend/src/components/LoginButton.tsx",
-    "frontend/src/components/MicroAppCard.tsx",
-    "frontend/src/components/OrgSwitcher.tsx",
-    "frontend/src/components/PortalLayout.tsx",
-    "frontend/src/components/ProfileSetupModal.tsx",
-    "frontend/src/components/RequireRole.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/i18n/index.ts",
-    "frontend/src/i18n/locales/en.ts",
-    "frontend/src/i18n/locales/es.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
-    "frontend/src/pages/AdminDashboardPage.tsx",
-    "frontend/src/pages/MicroAppDirectoryPage.tsx",
-    "frontend/src/pages/OrganizationManagementPage.tsx",
-    "frontend/src/pages/PortalHomePage.tsx",
-    "frontend/src/pages/PricingPlansPage.tsx",
-    "frontend/src/pages/VendorManagementPage.tsx",
-    "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx",
-    "frontend/src/pages/microapps/DaoProposalsShell.tsx",
-    "frontend/src/pages/microapps/ForumShell.tsx",
-    "frontend/src/pages/microapps/MarketplaceShell.tsx",
-    "frontend/src/pages/microapps/MessagingInboxShell.tsx",
-    "frontend/src/pages/microapps/MicroAppShellPage.tsx",
-    "frontend/src/pages/microapps/SocialFeedShell.tsx",
-    "frontend/src/theme/categoryTheme.ts",
-    "frontend/src/theme/tokens.ts",
-    "frontend/src/utils/urlParams.ts",
-    "frontend/tailwind.config.js",
+    "frontend/docs/shared-interop-test-suite-outline.md",
     "project_state.json"
   ]
 }

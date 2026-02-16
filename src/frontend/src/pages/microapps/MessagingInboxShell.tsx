@@ -1,25 +1,25 @@
 import { useEffect } from 'react';
-import { useLogActivity, useGetCallerUserProfile } from '../../hooks/useQueries';
+import { useLogActivityWithContext } from '../../hooks/useInteropContext';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Send } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
+import { useInternetIdentity } from '../../hooks/useInternetIdentity';
 
 export default function MessagingInboxShell() {
-  const { data: userProfile } = useGetCallerUserProfile();
-  const logActivity = useLogActivity();
+  const { identity } = useInternetIdentity();
+  const logActivity = useLogActivityWithContext();
 
   useEffect(() => {
-    if (userProfile) {
+    if (identity) {
       logActivity.mutate({
-        orgId: userProfile.activeOrgId || BigInt(0),
         appId: BigInt(2),
         eventType: 'OpenApp',
         metadata: 'Messaging Inbox',
       });
     }
-  }, [userProfile]);
+  }, [identity]);
 
   const mockThreads = [
     { id: 1, name: 'Team Alpha', lastMessage: 'Meeting at 3pm tomorrow', unread: 2 },

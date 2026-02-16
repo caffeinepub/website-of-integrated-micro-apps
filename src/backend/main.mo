@@ -71,6 +71,14 @@ actor {
     activeOrgId : ?OrgId;
   };
 
+  public type InteropContext = {
+    authenticated : Bool;
+    caller : Principal;
+    profile : ?UserProfile;
+    activeOrg : ?OrgId;
+    userRole : ?UserRole;
+  };
+
   let organizations = Map.empty<OrgId, Organization>();
   let vendors = Map.empty<VendorId, Vendor>();
   let pricingPlans = Map.empty<OrgId, PricingPlan>();
@@ -106,6 +114,34 @@ actor {
       case (?org) {
         org.members.find(func(member : Principal) : Bool { member == caller }) != null;
       };
+    };
+  };
+
+  // Interoperability
+  public query ({ caller }) func getInteropContext() : async InteropContext {
+    let callerProfile = userProfiles.get(caller);
+    let activeOrg = switch (callerProfile) {
+      case (null) { null };
+      case (?p) { p.activeOrgId };
+    };
+    let userRole = switch (activeOrg) {
+      case (null) { null };
+      case (?orgId) {
+        if (isOrgOwner(caller, orgId)) {
+          ?#owner;
+        } else if (isOrgAdmin(caller, orgId)) {
+          ?#admin;
+        } else if (isOrgMember(caller, orgId)) {
+          ?#user;
+        } else { null };
+      };
+    };
+    {
+      authenticated = true;
+      caller;
+      profile = callerProfile;
+      activeOrg;
+      userRole;
     };
   };
 

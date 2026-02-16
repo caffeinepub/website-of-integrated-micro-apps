@@ -2,14 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-portal-style-home-experience-that-serves-as-a-hub-for-multiple-micro-apps-subsites-including-a-searchable-browsable-directory-of-micro-apps-grouped-by-category-at-minimum-ai-banking-cashapp-like-daos-linkedin-like-messaging-nns-openchat-like-openclaw-like-reddit-like-social-media-and-include-additional-best-of-breed-categories-beyond-the-initial-list",
-      "featureTitle": "Create a portal-style home experience that serves as a hub for multiple micro-apps/subsites, including a searchable/browsable directory of micro-apps grouped by category (at minimum: AI, Banking, CashApp-like, DAOs, LinkedIn-like, Messaging, NNS, OpenChat-like, OpenClaw-like, Reddit-like, Social Media) and include additional best-of-breed categories beyond the initial list.",
+      "featureId": "feature-add-a-compact-test-suite-outline-document-for-the-shared-interoperability-layer-that-enumerates-backend-canister-api-tests-for-getinteropcontext-getuserrole-and-logactivity-including-isolation-tests-contract-shape-assertions-multi-tenant-boundary-tests-workflow-chain-tests-and-failure-condition-tests",
+      "featureTitle": "Add a compact test suite outline document for the shared interoperability layer that enumerates backend canister API tests for getInteropContext, getUserRole, and logActivity, including isolation tests, contract/shape assertions, multi-tenant boundary tests, workflow-chain tests, and failure-condition tests.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/catalog/microAppsCatalog.ts",
-        "frontend/src/components/MicroAppCard.tsx",
-        "frontend/src/pages/MicroAppDirectoryPage.tsx",
-        "frontend/src/pages/PortalHomePage.tsx"
+        "frontend/docs/shared-interop-test-suite-outline.md"
       ],
       "components": [
         "authorization@4.0.0",
@@ -20,18 +16,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-18"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-a-consistent-fun-playful-color-coded-ui-system-for-micro-app-cards-and-navigation-using-simple-layouts-suitable-for-broad-age-ranges-ensure-each-micro-app-category-has-a-consistent-color-and-icon-style",
-      "featureTitle": "Implement a consistent, fun, playful, color-coded UI system for micro-app cards and navigation, using simple layouts suitable for broad age ranges. Ensure each micro-app category has a consistent color and icon style.",
+      "featureId": "feature-include-in-the-test-suite-outline-a-minimal-repeatable-manual-test-execution-plan-using-multiple-identities-e-g-separate-local-identities-for-owner-admin-user-to-exercise-the-interoperability-apis-end-to-end-with-concrete-steps-and-expected-outcomes",
+      "featureTitle": "Include in the test suite outline a minimal, repeatable manual test execution plan using multiple identities (e.g., separate local identities for owner/admin/user) to exercise the interoperability APIs end-to-end, with concrete steps and expected outcomes.",
       "files": [
-        "frontend/src/components/CategoryBadge.tsx",
-        "frontend/src/components/MicroAppCard.tsx",
-        "frontend/src/pages/MicroAppDirectoryPage.tsx",
-        "frontend/src/theme/categoryTheme.ts"
+        "frontend/docs/shared-interop-test-suite-outline.md"
       ],
       "components": [
         "authorization@4.0.0",
@@ -42,231 +35,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-coherent-visual-theme-for-the-portal-colors-typography-layout-and-apply-it-consistently-across-all-screens-avoid-using-a-blue-purple-primary-palette",
-      "featureTitle": "Add a coherent visual theme for the portal (colors, typography, layout) and apply it consistently across all screens. Avoid using a blue/purple primary palette.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/PortalLayout.tsx",
-        "frontend/src/index.css",
-        "frontend/src/theme/tokens.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-routing-and-page-shells-for-micro-apps-so-that-each-directory-item-opens-a-dedicated-micro-app-page-even-if-functionality-is-minimal-initially-include-at-least-6-starter-micro-app-shells-inspired-by-the-requested-domains-e-g-simple-social-feed-basic-messaging-inbox-ui-dao-proposals-list-lightweight-forum-basic-vendor-marketplace-listing-basic-ai-prompt-playground-ui-without-claiming-to-replicate-external-products",
-      "featureTitle": "Add routing and page shells for micro-apps so that each directory item opens a dedicated micro-app page (even if functionality is minimal initially). Include at least 6 starter micro-app shells inspired by the requested domains (e.g., simple social feed, basic messaging inbox UI, DAO proposals list, lightweight forum, basic vendor marketplace listing, basic AI prompt playground UI) without claiming to replicate external products.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/MicroAppCard.tsx",
-        "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx",
-        "frontend/src/pages/microapps/DaoProposalsShell.tsx",
-        "frontend/src/pages/microapps/ForumShell.tsx",
-        "frontend/src/pages/microapps/MarketplaceShell.tsx",
-        "frontend/src/pages/microapps/MessagingInboxShell.tsx",
-        "frontend/src/pages/microapps/MicroAppShellPage.tsx",
-        "frontend/src/pages/microapps/SocialFeedShell.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-internet-identity-login-and-a-shared-identity-layer-in-the-app-so-all-micro-app-pages-can-access-the-authenticated-user-principal-and-display-signed-in-state",
-      "featureTitle": "Implement Internet Identity login and a shared identity layer in the app so all micro-app pages can access the authenticated user principal and display signed-in state.",
-      "files": [
-        "frontend/src/components/LoginButton.tsx",
-        "frontend/src/components/PortalLayout.tsx",
-        "frontend/src/components/ProfileSetupModal.tsx",
-        "frontend/src/pages/microapps/MicroAppShellPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-multi-organization-multi-tenant-support-with-the-ability-to-create-an-organization-join-an-organization-and-select-an-active-organization-context-for-all-micro-app-interactions",
-      "featureTitle": "Implement multi-organization (multi-tenant) support with the ability to create an organization, join an organization, and select an active organization context for all micro-app interactions.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/OrgSwitcher.tsx",
-        "frontend/src/components/PortalLayout.tsx",
-        "frontend/src/pages/OrganizationManagementPage.tsx",
-        "frontend/src/pages/microapps/MicroAppShellPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-role-based-access-control-with-at-least-three-roles-owner-admin-user-provide-basic-privacy-controls-by-enforcing-role-checks-on-sensitive-endpoints-and-pages-e-g-dashboards-metrics",
-      "featureTitle": "Implement role-based access control with at least three roles: Owner, Admin, User. Provide basic privacy controls by enforcing role checks on sensitive endpoints and pages (e.g., dashboards/metrics).",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/RequireRole.tsx",
-        "frontend/src/pages/AdminDashboardPage.tsx",
-        "frontend/src/pages/VendorManagementPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-provide-an-admin-owner-dashboard-area-with-basic-metrics-and-reporting-across-the-portal-and-micro-app-usage-e-g-counts-of-orgs-users-micro-app-visits-opens-and-recent-activity-ensure-metrics-are-scoped-by-organization-where-appropriate",
-      "featureTitle": "Provide an Admin/Owner dashboard area with basic metrics and reporting across the portal and micro-app usage (e.g., counts of orgs, users, micro-app visits/opens, and recent activity). Ensure metrics are scoped by organization where appropriate.",
-      "files": [
-        "frontend/src/components/PortalLayout.tsx",
-        "frontend/src/pages/AdminDashboardPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-multilingual-infrastructure-for-all-user-facing-text-english-as-the-default-and-demonstrate-at-least-one-additional-locale-toggle-with-partial-translations-for-core-navigation-and-directory-screens",
-      "featureTitle": "Add multilingual infrastructure for all user-facing text (English as the default) and demonstrate at least one additional locale toggle with partial translations for core navigation and directory screens.",
-      "files": [
-        "frontend/src/components/LanguageSelector.tsx",
-        "frontend/src/components/PortalLayout.tsx",
-        "frontend/src/i18n/index.ts",
-        "frontend/src/i18n/locales/en.ts",
-        "frontend/src/i18n/locales/es.ts",
-        "frontend/src/pages/MicroAppDirectoryPage.tsx",
-        "frontend/src/pages/PortalHomePage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-10"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-vendors-model-to-support-multi-vendor-scenarios-allow-an-organization-to-create-and-manage-vendor-profiles-and-associate-them-to-relevant-micro-app-experiences-e-g-marketplace-listing-shell",
-      "featureTitle": "Add a vendors model to support “multi-vendor” scenarios: allow an organization to create and manage vendor profiles and associate them to relevant micro-app experiences (e.g., marketplace listing shell).",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/pages/VendorManagementPage.tsx",
-        "frontend/src/pages/microapps/MarketplaceShell.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-pricing-plans-page-that-provides-guidance-content-for-best-in-class-pricing-across-micro-app-categories-presented-as-editable-content-stored-on-the-backend-so-admin-owner-can-update",
-      "featureTitle": "Add a “Pricing & Plans” page that provides guidance content for best-in-class pricing across micro-app categories, presented as editable content stored on the backend (so Admin/Owner can update).",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/PortalLayout.tsx",
-        "frontend/src/pages/PricingPlansPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-generated-static-image-assets-playful-category-icons-a-simple-portal-hero-graphic-and-render-them-in-the-portal-ui-directory-cards-category-headers-and-landing-hero-store-generated-images-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend",
-      "featureTitle": "Add generated static image assets (playful category icons + a simple portal hero graphic) and render them in the portal UI (directory cards, category headers, and landing hero). Store generated images under frontend/public/assets/generated and reference them directly from the frontend.",
-      "files": [
-        "frontend/src/components/MicroAppCard.tsx",
-        "frontend/src/pages/PortalHomePage.tsx",
-        "frontend/src/theme/categoryTheme.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-13"
+        "REQ-19"
       ],
       "confidence": "high"
     }

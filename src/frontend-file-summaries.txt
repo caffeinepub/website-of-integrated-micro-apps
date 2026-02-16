@@ -1,5 +1,11 @@
 {
   "frontend/src/pages/microapps/AiPromptPlaygroundShell.tsx": "AI Playground micro-app shell with prompt input, simulated AI responses, and conversation history display.",
   "frontend/src/components/MicroAppCard.tsx": "Reusable micro-app card component that displays app info with category theming and navigates to the app route on click using useNavigate hook.",
-  "frontend/src/index.css": "Global styles with OKLCH color system using warm coral/orange primary palette, supporting both light and dark modes with Tailwind CSS integration."
+  "frontend/src/index.css": "Global styles with OKLCH color system using warm coral/orange primary palette, supporting both light and dark modes with Tailwind CSS integration.",
+  "frontend/src/hooks/useInteropContext.ts": "New shared interoperability module providing useInteropContext hook to fetch backend interop context and useLogActivityWithContext helper for org-aware activity logging.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for backend operations; updated useGetUserRole to use caller principal from Internet Identity instead of UserProfile, with stable query keys including orgId and principal.",
+  "frontend/src/components/RequireRole.tsx": "Role-based access control component using the shared interoperability context to check user roles and display access denied screens when unauthorized.",
+  "frontend/src/pages/microapps/MessagingInboxShell.tsx": "Messaging inbox micro-app shell using the shared interoperability layer for activity logging with org-aware context.",
+  "frontend/src/pages/microapps/SocialFeedShell.tsx": "Social feed micro-app shell using the shared interoperability layer for activity logging with org-aware context.",
+  "frontend/docs/shared-interop-test-suite-outline.md": "Comprehensive test suite outline for shared interoperability layer APIs covering isolation tests, contract validation, multi-tenant boundaries, workflow chains, failure conditions, and a detailed manual execution plan with two identities."
 }

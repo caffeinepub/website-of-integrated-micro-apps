@@ -7,6 +7,13 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
+export interface InteropContext {
+    userRole?: UserRole;
+    activeOrg?: OrgId;
+    caller: Principal;
+    authenticated: boolean;
+    profile?: UserProfile;
+}
 export type AppId = bigint;
 export type OrgId = bigint;
 export type Time = bigint;
@@ -66,6 +73,7 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole__1>;
     getDashboardMetrics(): Promise<[bigint, bigint, bigint, bigint]>;
+    getInteropContext(): Promise<InteropContext>;
     getOrganization(orgId: OrgId): Promise<{
         id: OrgId;
         members: Array<Principal>;

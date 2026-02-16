@@ -1,5 +1,5 @@
-import { useGetCallerUserProfile, useGetUserRole } from '../hooks/useQueries';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { useInteropContext } from '../hooks/useInteropContext';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,8 +13,7 @@ interface RequireRoleProps {
 
 export default function RequireRole({ children, requireAdmin, requireOwner }: RequireRoleProps) {
   const { identity } = useInternetIdentity();
-  const { data: userProfile } = useGetCallerUserProfile();
-  const { data: userRole } = useGetUserRole(userProfile?.activeOrgId || null);
+  const { data: context, isLoading } = useInteropContext();
 
   if (!identity) {
     return (
@@ -27,6 +26,12 @@ export default function RequireRole({ children, requireAdmin, requireOwner }: Re
       </div>
     );
   }
+
+  if (isLoading) {
+    return null;
+  }
+
+  const userRole = context?.userRole;
 
   if (requireOwner && userRole !== 'owner') {
     return (

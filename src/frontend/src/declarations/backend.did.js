@@ -40,6 +40,18 @@ export const UserProfile = IDL.Record({
   'email' : IDL.Text,
   'activeOrgId' : IDL.Opt(OrgId),
 });
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'owner' : IDL.Null,
+  'user' : IDL.Null,
+});
+export const InteropContext = IDL.Record({
+  'userRole' : IDL.Opt(UserRole),
+  'activeOrg' : IDL.Opt(OrgId),
+  'caller' : IDL.Principal,
+  'authenticated' : IDL.Bool,
+  'profile' : IDL.Opt(UserProfile),
+});
 export const PricingPlan = IDL.Record({
   'id' : OrgId,
   'features' : IDL.Vec(IDL.Text),
@@ -49,11 +61,6 @@ export const PricingPlan = IDL.Record({
   'description' : IDL.Text,
   'category' : IDL.Text,
   'price' : IDL.Nat,
-});
-export const UserRole = IDL.Variant({
-  'admin' : IDL.Null,
-  'owner' : IDL.Null,
-  'user' : IDL.Null,
 });
 
 export const idlService = IDL.Service({
@@ -81,6 +88,7 @@ export const idlService = IDL.Service({
       [IDL.Nat, IDL.Nat, IDL.Nat, IDL.Nat],
       [],
     ),
+  'getInteropContext' : IDL.Func([], [InteropContext], ['query']),
   'getOrganization' : IDL.Func(
       [OrgId],
       [
@@ -164,6 +172,18 @@ export const idlFactory = ({ IDL }) => {
     'email' : IDL.Text,
     'activeOrgId' : IDL.Opt(OrgId),
   });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'owner' : IDL.Null,
+    'user' : IDL.Null,
+  });
+  const InteropContext = IDL.Record({
+    'userRole' : IDL.Opt(UserRole),
+    'activeOrg' : IDL.Opt(OrgId),
+    'caller' : IDL.Principal,
+    'authenticated' : IDL.Bool,
+    'profile' : IDL.Opt(UserProfile),
+  });
   const PricingPlan = IDL.Record({
     'id' : OrgId,
     'features' : IDL.Vec(IDL.Text),
@@ -173,11 +193,6 @@ export const idlFactory = ({ IDL }) => {
     'description' : IDL.Text,
     'category' : IDL.Text,
     'price' : IDL.Nat,
-  });
-  const UserRole = IDL.Variant({
-    'admin' : IDL.Null,
-    'owner' : IDL.Null,
-    'user' : IDL.Null,
   });
   
   return IDL.Service({
@@ -205,6 +220,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Nat, IDL.Nat, IDL.Nat, IDL.Nat],
         [],
       ),
+    'getInteropContext' : IDL.Func([], [InteropContext], ['query']),
     'getOrganization' : IDL.Func(
         [OrgId],
         [

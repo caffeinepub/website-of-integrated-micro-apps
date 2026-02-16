@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
+import { useInternetIdentity } from './useInternetIdentity';
 import type { UserProfile, PricingPlan, Vendor, ActivityLog } from '../backend';
 
 export function useGetCallerUserProfile() {
@@ -33,6 +34,7 @@ export function useSaveCallerUserProfile() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['currentUserProfile'] });
+      queryClient.invalidateQueries({ queryKey: ['interopContext'] });
     },
   });
 }
@@ -61,6 +63,7 @@ export function useCreateOrganization() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] });
+      queryClient.invalidateQueries({ queryKey: ['interopContext'] });
     },
   });
 }
@@ -76,6 +79,7 @@ export function useJoinOrganization() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] });
+      queryClient.invalidateQueries({ queryKey: ['interopContext'] });
     },
   });
 }
@@ -95,16 +99,17 @@ export function useGetOrganization(orgId: bigint | null) {
 
 export function useGetUserRole(orgId: bigint | null) {
   const { actor, isFetching: actorFetching } = useActor();
+  const { identity } = useInternetIdentity();
 
   return useQuery({
-    queryKey: ['userRole', orgId?.toString()],
+    queryKey: ['userRole', orgId?.toString(), identity?.getPrincipal().toString() || 'anonymous'],
     queryFn: async () => {
-      if (!actor || !orgId) return null;
-      const identity = await actor.getCallerUserProfile();
-      if (!identity) return null;
-      return actor.getUserRole(orgId, identity as any);
+      if (!actor || !orgId || !identity) return null;
+      const userPrincipal = identity.getPrincipal();
+      return actor.getUserRole(orgId, userPrincipal);
     },
-    enabled: !!actor && !actorFetching && !!orgId,
+    enabled: !!actor && !actorFetching && !!orgId && !!identity,
+    retry: false,
   });
 }
 

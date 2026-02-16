@@ -1,25 +1,25 @@
 import { useEffect } from 'react';
-import { useLogActivity, useGetCallerUserProfile } from '../../hooks/useQueries';
+import { useLogActivityWithContext } from '../../hooks/useInteropContext';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Heart, MessageCircle, Share2, ArrowLeft } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
+import { useInternetIdentity } from '../../hooks/useInternetIdentity';
 
 export default function SocialFeedShell() {
-  const { data: userProfile } = useGetCallerUserProfile();
-  const logActivity = useLogActivity();
+  const { identity } = useInternetIdentity();
+  const logActivity = useLogActivityWithContext();
 
   useEffect(() => {
-    if (userProfile) {
+    if (identity) {
       logActivity.mutate({
-        orgId: userProfile.activeOrgId || BigInt(0),
         appId: BigInt(1),
         eventType: 'OpenApp',
         metadata: 'Social Feed',
       });
     }
-  }, [userProfile]);
+  }, [identity]);
 
   const mockPosts = [
     {
