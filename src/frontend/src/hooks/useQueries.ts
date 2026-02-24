@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
 import { useInternetIdentity } from './useInternetIdentity';
-import type { UserProfile, PricingPlan, Vendor, ActivityLog } from '../backend';
+import type { UserProfile, PricingPlan, Vendor, ActivityLog, SocialPost, Message, ForumReply } from '../backend';
 
 export function useGetCallerUserProfile() {
   const { actor, isFetching: actorFetching } = useActor();
@@ -276,5 +276,201 @@ export function useGetActivityLogs() {
       return actor.getActivityLogs();
     },
     enabled: !!actor && !actorFetching,
+  });
+}
+
+// Social Feed Hooks
+export function useSocialPosts(orgId: bigint | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<SocialPost[]>({
+    queryKey: ['socialPosts', orgId?.toString()],
+    queryFn: async () => {
+      if (!actor || !orgId) return [];
+      return actor.getOrgPosts(orgId);
+    },
+    enabled: !!actor && !actorFetching && !!orgId,
+    refetchInterval: 60000, // 60 seconds
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+  });
+}
+
+export function useCreatePost() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ orgId, content }: { orgId: bigint; content: string }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.createPost(orgId, content);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['socialPosts', variables.orgId.toString()] });
+    },
+  });
+}
+
+export function useGetUserProfile(principal: string | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<UserProfile | null>({
+    queryKey: ['userProfile', principal],
+    queryFn: async () => {
+      if (!actor || !principal) return null;
+      // Convert string to Principal
+      const { Principal } = await import('@dfinity/principal');
+      const userPrincipal = Principal.fromText(principal);
+      return actor.getUserProfile(userPrincipal);
+    },
+    enabled: !!actor && !actorFetching && !!principal,
+  });
+}
+
+// Messaging Hooks
+export function useConversations(orgId: bigint | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<Array<{
+    id: bigint;
+    participants: Array<any>;
+    messages: Array<Message>;
+    orgId: bigint;
+  }>>({
+    queryKey: ['conversations', orgId?.toString()],
+    queryFn: async () => {
+      if (!actor || !orgId) return [];
+      return actor.getUserConversations(orgId);
+    },
+    enabled: !!actor && !actorFetching && !!orgId,
+    refetchInterval: 30000, // 30 seconds
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+  });
+}
+
+export function useCreateConversation() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ orgId, participants }: { orgId: bigint; participants: Array<any> }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.createConversation(orgId, participants);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['conversations', variables.orgId.toString()] });
+    },
+  });
+}
+
+export function useAddMessage() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ conversationId, content, orgId }: { conversationId: bigint; content: string; orgId: bigint }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.addMessage(conversationId, content);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['conversations', variables.orgId.toString()] });
+      queryClient.invalidateQueries({ queryKey: ['conversation', variables.conversationId.toString()] });
+    },
+  });
+}
+
+export function useGetConversation(conversationId: bigint | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<{
+    id: bigint;
+    participants: Array<any>;
+    messages: Array<Message>;
+    orgId: bigint;
+  } | null>({
+    queryKey: ['conversation', conversationId?.toString()],
+    queryFn: async () => {
+      if (!actor || !conversationId) return null;
+      return actor.getConversation(conversationId);
+    },
+    enabled: !!actor && !actorFetching && !!conversationId,
+  });
+}
+
+// Forum Hooks
+export function useForumTopics(orgId: bigint | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<Array<{
+    id: bigint;
+    title: string;
+    content: string;
+    orgId: bigint;
+    author: any;
+    timestamp: bigint;
+    replies: Array<ForumReply>;
+  }>>({
+    queryKey: ['forumTopics', orgId?.toString()],
+    queryFn: async () => {
+      if (!actor || !orgId) return [];
+      return actor.getOrgTopics(orgId);
+    },
+    enabled: !!actor && !actorFetching && !!orgId,
+    refetchInterval: 60000, // 60 seconds
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+  });
+}
+
+export function useCreateTopic() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ orgId, title, content }: { orgId: bigint; title: string; content: string }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.createTopic(orgId, title, content);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['forumTopics', variables.orgId.toString()] });
+    },
+  });
+}
+
+export function useAddReply() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ topicId, content, orgId }: { topicId: bigint; content: string; orgId: bigint }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.addReply(topicId, content);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['forumTopics', variables.orgId.toString()] });
+      queryClient.invalidateQueries({ queryKey: ['forumTopic', variables.topicId.toString()] });
+    },
+  });
+}
+
+export function useGetTopic(topicId: bigint | null) {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<{
+    id: bigint;
+    title: string;
+    content: string;
+    orgId: bigint;
+    author: any;
+    timestamp: bigint;
+    replies: Array<ForumReply>;
+  } | null>({
+    queryKey: ['forumTopic', topicId?.toString()],
+    queryFn: async () => {
+      if (!actor || !topicId) return null;
+      return actor.getTopic(topicId);
+    },
+    enabled: !!actor && !actorFetching && !!topicId,
   });
 }

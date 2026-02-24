@@ -1,40 +1,99 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Shared interoperability layer: compact test suite outline (frontend-only doc)",
+  "title": "Stage 2: CI Pipeline Configuration and Verification",
   "requirements": [
     {
-      "id": "REQ-18",
-      "summary": "Create a compact markdown test suite outline for shared interoperability layer APIs (getInteropContext, getUserRole, logActivity) covering isolation, contracts, multi-tenant boundaries, workflow chains, and failure conditions.",
+      "id": "REQ-51",
+      "summary": "Create GitHub Actions workflow file that runs test suite on push to main and pull requests, including dfx replica startup, backend deployment, test dependency installation, test execution, and artifact upload",
       "acceptanceCriteria": [
-        "A new markdown document exists in the repo that is clearly titled as the shared interoperability layer test suite outline.",
-        "The outline includes explicit test cases for getInteropContext covering: no profile, profile with no active org, profile with active org, and role resolution (owner/admin/user/null).",
-        "The outline includes explicit test cases for logActivity covering: orgId=0 logging, orgId=activeOrg logging, and unauthorized logging when caller is not an org member for orgId!=0.",
-        "The outline includes explicit multi-tenant boundary tests (e.g., user in Org A cannot obtain member/role context for Org B and cannot log activity to Org B).",
-        "The outline includes explicit workflow-chain scenarios (create org → join org → set active org in profile → getInteropContext → logActivity) with expected state transitions and assertions.",
-        "The outline includes explicit failure-condition tests that expect traps/denials for unauthorized profile access, unauthorized org access, unauthorized role checks, and unauthorized admin-only endpoints where applicable."
+        "Workflow file exists at .github/workflows/ci.yml",
+        "Workflow triggers on push to main and on pull requests",
+        "Job starts dfx replica successfully in CI environment",
+        "Job deploys backend canister before running tests",
+        "Job installs all required test dependencies",
+        "Job executes 'npm test' command",
+        "Test results are uploaded as workflow artifacts"
       ],
       "file_operations": [
         {
-          "path": "frontend/docs/shared-interop-test-suite-outline.md",
+          "path": ".github/workflows/ci.yml",
           "operation": "create",
-          "description": "Add a compact, clearly-titled test suite outline document for the shared interoperability layer, enumerating backend canister API test cases for getInteropContext, getUserRole, and logActivity, including: isolation tests, contract/shape assertions for returned InteropContext and roles, explicit multi-tenant boundary tests between orgs, workflow-chain scenarios with expected state transitions, and failure-condition tests expecting traps/denials where applicable. Ensure the cases explicitly cover the required getInteropContext and logActivity scenarios from the acceptance criteria."
+          "description": "Create GitHub Actions workflow file that: (1) triggers on push to main branch and pull requests, (2) sets up Node.js and dfx environments, (3) starts a local dfx replica in background, (4) deploys the backend canister using dfx deploy, (5) installs frontend test dependencies (vitest, @vitest/ui, @testing-library/react, @testing-library/jest-dom, happy-dom), (6) runs the test suite with 'npm test', and (7) uploads test results as workflow artifacts using actions/upload-artifact"
         }
       ]
     },
     {
-      "id": "REQ-19",
-      "summary": "Extend the test suite outline with a minimal, repeatable manual execution plan using multiple identities to exercise interoperability APIs end-to-end with steps and expected outcomes.",
+      "id": "REQ-52",
+      "summary": "Configure CI workflow to use dfx 0.15.0+ and Node.js 18.x+, with caching for dfx and npm dependencies, and optional coverage report generation",
       "acceptanceCriteria": [
-        "The document describes how to run the outlined scenarios locally with at least two distinct callers to validate role changes and org-boundary behavior.",
-        "The document specifies the required preconditions and the expected outputs/observations for each manual test scenario (e.g., expected InteropContext fields, expected authorization failures).",
-        "The manual plan references the exact backend methods used in this project (getInteropContext, saveCallerUserProfile, createOrganization, joinOrganization, getUserRole, logActivity) and does not refer to non-existent endpoints."
+        "CI workflow specifies dfx version 0.15.0 or newer",
+        "CI workflow specifies Node.js version 18.x or newer",
+        "Workflow includes caching step for dfx installation",
+        "Workflow includes caching step for npm dependencies",
+        "If vitest coverage is configured, workflow generates coverage report",
+        "Coverage report is uploaded as workflow artifact if generated"
       ],
       "file_operations": [
         {
-          "path": "frontend/docs/shared-interop-test-suite-outline.md",
+          "path": ".github/workflows/ci.yml",
           "operation": "modify",
-          "description": "Add a dedicated 'Manual execution plan (repeatable)' section describing a minimal local, multi-identity walkthrough (at least two callers such as owner/admin/user identities) with concrete preconditions, step sequences, and expected observations. The manual plan must explicitly reference only these backend methods: getInteropContext, saveCallerUserProfile, createOrganization, joinOrganization, getUserRole, logActivity; and must include expected authorization failures for org-boundary and unauthorized actions."
+          "description": "Update workflow to specify Node.js version 18.x using actions/setup-node with node-version parameter. Add dfx version constraint (0.15.0 or newer) in the dfx installation step. Implement caching for npm dependencies using actions/cache with path 'frontend/node_modules' and key based on package-lock.json hash. Implement caching for dfx installation using actions/cache with appropriate cache key. Add conditional step to generate and upload coverage report if vitest coverage configuration is detected (check for coverage configuration in vitest.config.ts), using 'npm test -- --coverage' command and uploading coverage artifacts"
+        }
+      ]
+    },
+    {
+      "id": "REQ-53",
+      "summary": "Add CI status badge to README.md and include section on running tests locally with link to test documentation",
+      "acceptanceCriteria": [
+        "README.md file exists at project root",
+        "README includes GitHub Actions CI status badge",
+        "README includes section on running tests locally",
+        "README includes link to frontend/src/__tests__/README.md",
+        "Status badge displays correct workflow status"
+      ],
+      "file_operations": [
+        {
+          "path": "README.md",
+          "operation": "create",
+          "description": "Create project README.md at repository root with: (1) project title 'Arkly Portal', (2) GitHub Actions CI status badge using markdown format '![CI Status](https://github.com/OWNER/REPO/workflows/CI/badge.svg)' (user must replace OWNER/REPO with actual values), (3) 'Running Tests Locally' section explaining how to install dependencies with 'npm install', start dfx replica with 'dfx start --background', deploy canisters with 'dfx deploy', and run tests with 'npm test', (4) link to detailed test documentation at 'frontend/src/__tests__/README.md' with text 'For detailed test suite documentation, see [Test Suite Documentation](frontend/src/__tests__/README.md)'"
+        }
+      ]
+    },
+    {
+      "id": "REQ-54",
+      "summary": "Update frontend test README to include Continuous Integration section explaining CI platform, automatic triggers, result viewing, and troubleshooting",
+      "acceptanceCriteria": [
+        "Frontend test README includes 'Continuous Integration' section",
+        "Section documents GitHub Actions as the CI platform",
+        "Section explains automatic test triggers",
+        "Section provides location for viewing CI results",
+        "Section includes troubleshooting guidance with local command examples"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/__tests__/README.md",
+          "operation": "modify",
+          "description": "Append a new 'Continuous Integration' section to the existing test documentation that includes: (1) statement that the project uses GitHub Actions as the CI platform, (2) explanation that tests run automatically on every push to the main branch and on all pull requests, (3) instructions to view CI results by navigating to the 'Actions' tab in the GitHub repository, (4) troubleshooting subsection explaining how to reproduce CI failures locally by running the same commands: 'dfx start --background', 'dfx deploy', 'npm install', 'npm test', with a note that local environment differences may require adjustments to match the CI container environment"
+        }
+      ]
+    },
+    {
+      "id": "REQ-55",
+      "summary": "Verify CI pipeline execution and document environment-specific adjustments in workflow comments",
+      "acceptanceCriteria": [
+        "Workflow successfully starts dfx replica in CI",
+        "Workflow successfully deploys backend canister",
+        "Workflow successfully installs dependencies",
+        "Workflow successfully runs test suite",
+        "All test jobs complete without errors",
+        "Workflow file includes comments documenting CI-specific configuration"
+      ],
+      "file_operations": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "operation": "modify",
+          "description": "Add inline comments throughout the workflow file documenting CI-specific configuration decisions and environment adjustments. Include comments explaining: (1) why dfx replica is started in background mode for CI, (2) any network port configurations needed for CI environment, (3) timeout values for dfx operations, (4) handling of dfx wallet initialization in CI context, (5) differences between local and CI test execution environments, (6) any Ubuntu-specific package requirements or setup steps. Add a comment block at the top of the file summarizing the workflow purpose and any known limitations or requirements for successful execution in GitHub Actions environment"
         }
       ]
     }

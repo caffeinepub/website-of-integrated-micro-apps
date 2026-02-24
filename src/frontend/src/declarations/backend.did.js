@@ -40,6 +40,11 @@ export const UserProfile = IDL.Record({
   'email' : IDL.Text,
   'activeOrgId' : IDL.Opt(OrgId),
 });
+export const Message = IDL.Record({
+  'content' : IDL.Text,
+  'sender' : IDL.Principal,
+  'timestamp' : Time,
+});
 export const UserRole = IDL.Variant({
   'admin' : IDL.Null,
   'owner' : IDL.Null,
@@ -51,6 +56,18 @@ export const InteropContext = IDL.Record({
   'caller' : IDL.Principal,
   'authenticated' : IDL.Bool,
   'profile' : IDL.Opt(UserProfile),
+});
+export const SocialPost = IDL.Record({
+  'id' : IDL.Nat,
+  'content' : IDL.Text,
+  'orgId' : OrgId,
+  'author' : IDL.Principal,
+  'timestamp' : Time,
+});
+export const ForumReply = IDL.Record({
+  'content' : IDL.Text,
+  'author' : IDL.Principal,
+  'timestamp' : Time,
 });
 export const PricingPlan = IDL.Record({
   'id' : OrgId,
@@ -65,13 +82,22 @@ export const PricingPlan = IDL.Record({
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addMessage' : IDL.Func([IDL.Nat, IDL.Text], [], []),
+  'addReply' : IDL.Func([IDL.Nat, IDL.Text], [], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole__1], [], []),
+  'createConversation' : IDL.Func(
+      [OrgId, IDL.Vec(IDL.Principal)],
+      [IDL.Nat],
+      [],
+    ),
   'createOrganization' : IDL.Func([IDL.Text, IDL.Text], [OrgId], []),
   'createPlan' : IDL.Func(
       [IDL.Text, IDL.Text, IDL.Nat, IDL.Vec(IDL.Text), IDL.Text],
       [OrgId],
       [],
     ),
+  'createPost' : IDL.Func([OrgId, IDL.Text], [IDL.Nat], []),
+  'createTopic' : IDL.Func([OrgId, IDL.Text, IDL.Text], [IDL.Nat], []),
   'createVendor' : IDL.Func(
       [OrgId, IDL.Text, IDL.Text, IDL.Text],
       [VendorId],
@@ -83,12 +109,44 @@ export const idlService = IDL.Service({
   'getActivityLogs' : IDL.Func([], [IDL.Vec(ActivityLog)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole__1], ['query']),
+  'getConversation' : IDL.Func(
+      [IDL.Nat],
+      [
+        IDL.Opt(
+          IDL.Record({
+            'id' : IDL.Nat,
+            'participants' : IDL.Vec(IDL.Principal),
+            'messages' : IDL.Vec(Message),
+            'orgId' : OrgId,
+          })
+        ),
+      ],
+      ['query'],
+    ),
   'getDashboardMetrics' : IDL.Func(
       [],
       [IDL.Nat, IDL.Nat, IDL.Nat, IDL.Nat],
       [],
     ),
   'getInteropContext' : IDL.Func([], [InteropContext], ['query']),
+  'getOrgPosts' : IDL.Func([OrgId], [IDL.Vec(SocialPost)], ['query']),
+  'getOrgTopics' : IDL.Func(
+      [OrgId],
+      [
+        IDL.Vec(
+          IDL.Record({
+            'id' : IDL.Nat,
+            'title' : IDL.Text,
+            'content' : IDL.Text,
+            'orgId' : OrgId,
+            'author' : IDL.Principal,
+            'timestamp' : Time,
+            'replies' : IDL.Vec(ForumReply),
+          })
+        ),
+      ],
+      ['query'],
+    ),
   'getOrganization' : IDL.Func(
       [OrgId],
       [
@@ -104,7 +162,39 @@ export const idlService = IDL.Service({
       ],
       ['query'],
     ),
+  'getPost' : IDL.Func([IDL.Nat], [IDL.Opt(SocialPost)], ['query']),
   'getPublishedPlans' : IDL.Func([], [IDL.Vec(PricingPlan)], ['query']),
+  'getTopic' : IDL.Func(
+      [IDL.Nat],
+      [
+        IDL.Opt(
+          IDL.Record({
+            'id' : IDL.Nat,
+            'title' : IDL.Text,
+            'content' : IDL.Text,
+            'orgId' : OrgId,
+            'author' : IDL.Principal,
+            'timestamp' : Time,
+            'replies' : IDL.Vec(ForumReply),
+          })
+        ),
+      ],
+      ['query'],
+    ),
+  'getUserConversations' : IDL.Func(
+      [OrgId],
+      [
+        IDL.Vec(
+          IDL.Record({
+            'id' : IDL.Nat,
+            'participants' : IDL.Vec(IDL.Principal),
+            'messages' : IDL.Vec(Message),
+            'orgId' : OrgId,
+          })
+        ),
+      ],
+      ['query'],
+    ),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
@@ -172,6 +262,11 @@ export const idlFactory = ({ IDL }) => {
     'email' : IDL.Text,
     'activeOrgId' : IDL.Opt(OrgId),
   });
+  const Message = IDL.Record({
+    'content' : IDL.Text,
+    'sender' : IDL.Principal,
+    'timestamp' : Time,
+  });
   const UserRole = IDL.Variant({
     'admin' : IDL.Null,
     'owner' : IDL.Null,
@@ -183,6 +278,18 @@ export const idlFactory = ({ IDL }) => {
     'caller' : IDL.Principal,
     'authenticated' : IDL.Bool,
     'profile' : IDL.Opt(UserProfile),
+  });
+  const SocialPost = IDL.Record({
+    'id' : IDL.Nat,
+    'content' : IDL.Text,
+    'orgId' : OrgId,
+    'author' : IDL.Principal,
+    'timestamp' : Time,
+  });
+  const ForumReply = IDL.Record({
+    'content' : IDL.Text,
+    'author' : IDL.Principal,
+    'timestamp' : Time,
   });
   const PricingPlan = IDL.Record({
     'id' : OrgId,
@@ -197,13 +304,22 @@ export const idlFactory = ({ IDL }) => {
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addMessage' : IDL.Func([IDL.Nat, IDL.Text], [], []),
+    'addReply' : IDL.Func([IDL.Nat, IDL.Text], [], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole__1], [], []),
+    'createConversation' : IDL.Func(
+        [OrgId, IDL.Vec(IDL.Principal)],
+        [IDL.Nat],
+        [],
+      ),
     'createOrganization' : IDL.Func([IDL.Text, IDL.Text], [OrgId], []),
     'createPlan' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Nat, IDL.Vec(IDL.Text), IDL.Text],
         [OrgId],
         [],
       ),
+    'createPost' : IDL.Func([OrgId, IDL.Text], [IDL.Nat], []),
+    'createTopic' : IDL.Func([OrgId, IDL.Text, IDL.Text], [IDL.Nat], []),
     'createVendor' : IDL.Func(
         [OrgId, IDL.Text, IDL.Text, IDL.Text],
         [VendorId],
@@ -215,12 +331,44 @@ export const idlFactory = ({ IDL }) => {
     'getActivityLogs' : IDL.Func([], [IDL.Vec(ActivityLog)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole__1], ['query']),
+    'getConversation' : IDL.Func(
+        [IDL.Nat],
+        [
+          IDL.Opt(
+            IDL.Record({
+              'id' : IDL.Nat,
+              'participants' : IDL.Vec(IDL.Principal),
+              'messages' : IDL.Vec(Message),
+              'orgId' : OrgId,
+            })
+          ),
+        ],
+        ['query'],
+      ),
     'getDashboardMetrics' : IDL.Func(
         [],
         [IDL.Nat, IDL.Nat, IDL.Nat, IDL.Nat],
         [],
       ),
     'getInteropContext' : IDL.Func([], [InteropContext], ['query']),
+    'getOrgPosts' : IDL.Func([OrgId], [IDL.Vec(SocialPost)], ['query']),
+    'getOrgTopics' : IDL.Func(
+        [OrgId],
+        [
+          IDL.Vec(
+            IDL.Record({
+              'id' : IDL.Nat,
+              'title' : IDL.Text,
+              'content' : IDL.Text,
+              'orgId' : OrgId,
+              'author' : IDL.Principal,
+              'timestamp' : Time,
+              'replies' : IDL.Vec(ForumReply),
+            })
+          ),
+        ],
+        ['query'],
+      ),
     'getOrganization' : IDL.Func(
         [OrgId],
         [
@@ -236,7 +384,39 @@ export const idlFactory = ({ IDL }) => {
         ],
         ['query'],
       ),
+    'getPost' : IDL.Func([IDL.Nat], [IDL.Opt(SocialPost)], ['query']),
     'getPublishedPlans' : IDL.Func([], [IDL.Vec(PricingPlan)], ['query']),
+    'getTopic' : IDL.Func(
+        [IDL.Nat],
+        [
+          IDL.Opt(
+            IDL.Record({
+              'id' : IDL.Nat,
+              'title' : IDL.Text,
+              'content' : IDL.Text,
+              'orgId' : OrgId,
+              'author' : IDL.Principal,
+              'timestamp' : Time,
+              'replies' : IDL.Vec(ForumReply),
+            })
+          ),
+        ],
+        ['query'],
+      ),
+    'getUserConversations' : IDL.Func(
+        [OrgId],
+        [
+          IDL.Vec(
+            IDL.Record({
+              'id' : IDL.Nat,
+              'participants' : IDL.Vec(IDL.Principal),
+              'messages' : IDL.Vec(Message),
+              'orgId' : OrgId,
+            })
+          ),
+        ],
+        ['query'],
+      ),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],

@@ -79,6 +79,44 @@ actor {
     userRole : ?UserRole;
   };
 
+  // New Types for Micro-Apps
+  public type SocialPost = {
+    id : Nat;
+    orgId : OrgId;
+    author : Principal;
+    content : Text;
+    timestamp : Time.Time;
+  };
+
+  public type Message = {
+    sender : Principal;
+    content : Text;
+    timestamp : Time.Time;
+  };
+
+  public type Conversation = {
+    id : Nat;
+    orgId : OrgId;
+    participants : List.List<Principal>;
+    messages : List.List<Message>;
+  };
+
+  public type ForumTopic = {
+    id : Nat;
+    orgId : OrgId;
+    title : Text;
+    author : Principal;
+    content : Text;
+    replies : List.List<ForumReply>;
+    timestamp : Time.Time;
+  };
+
+  public type ForumReply = {
+    author : Principal;
+    content : Text;
+    timestamp : Time.Time;
+  };
+
   let organizations = Map.empty<OrgId, Organization>();
   let vendors = Map.empty<VendorId, Vendor>();
   let pricingPlans = Map.empty<OrgId, PricingPlan>();
@@ -88,6 +126,14 @@ actor {
   var nextVendorId = 1;
   var nextPlanId = 1;
   var nextLogId = 1;
+
+  // Micro-App Data
+  let socialFeedPosts = Map.empty<Nat, SocialPost>();
+  let conversations = Map.empty<Nat, Conversation>();
+  let forumTopics = Map.empty<Nat, ForumTopic>();
+  var nextPostId = 1;
+  var nextConversationId = 1;
+  var nextTopicId = 1;
 
   // Helper function to check if user is owner of an organization
   private func isOrgOwner(caller : Principal, orgId : OrgId) : Bool {
@@ -569,4 +615,291 @@ actor {
     let activityCount = activityLogs.size();
     (orgCount, vendorCount, planCount, activityCount);
   };
+
+  // Social Feed Methods
+  public shared ({ caller }) func createPost(orgId : OrgId, content : Text) : async Nat {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can create posts");
+    };
+
+    if (not isOrgMember(caller, orgId)) {
+      Runtime.trap("Unauthorized: You must be a member of this organization to create posts");
+    };
+
+    let postId = nextPostId;
+    nextPostId += 1;
+
+    let post : SocialPost = {
+      id = postId;
+      orgId;
+      author = caller;
+      content;
+      timestamp = Time.now();
+    };
+
+    socialFeedPosts.add(postId, post);
+    postId;
+  };
+
+  public query ({ caller }) func getOrgPosts(orgId : OrgId) : async [SocialPost] {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can view posts");
+    };
+
+    if (not isOrgMember(caller, orgId)) {
+      Runtime.trap("Unauthorized: You must be a member of this organization to view posts");
+    };
+
+    let allPosts = socialFeedPosts.values().toArray();
+    allPosts.filter(func(post) { post.orgId == orgId });
+  };
+
+  public query ({ caller }) func getPost(postId : Nat) : async ?SocialPost {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can view posts");
+    };
+
+    switch (socialFeedPosts.get(postId)) {
+      case (null) { null };
+      case (?post) {
+        if (not isOrgMember(caller, post.orgId)) {
+          Runtime.trap("Unauthorized: You must be a member of this organization to view this post");
+        };
+        ?post;
+      };
+    };
+  };
+
+  // Messaging Methods
+  public shared ({ caller }) func createConversation(orgId : OrgId, participants : [Principal]) : async Nat {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can create conversations");
+    };
+
+    if (not isOrgMember(caller, orgId)) {
+      Runtime.trap("Unauthorized: You must be a member of this organization to create conversations");
+    };
+
+    // Verify all participants are members of the organization
+    for (participant in participants.vals()) {
+      if (not isOrgMember(participant, orgId)) {
+        Runtime.trap("Unauthorized: All participants must be members of this organization");
+      };
+    };
+
+    let conversationId = nextConversationId;
+    nextConversationId += 1;
+
+    let convo : Conversation = {
+      id = conversationId;
+      orgId;
+      participants = List.fromArray(participants);
+      messages = List.empty<Message>();
+    };
+
+    conversations.add(conversationId, convo);
+    conversationId;
+  };
+
+  public shared ({ caller }) func addMessage(conversationId : Nat, content : Text) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can send messages");
+    };
+
+    switch (conversations.get(conversationId)) {
+      case (null) { Runtime.trap("Conversation not found") };
+      case (?convo) {
+        if (convo.participants.find(func(p) { p == caller }) == null) {
+          Runtime.trap("Unauthorized: You must be a participant to send messages");
+        };
+
+        let message : Message = {
+          sender = caller;
+          content;
+          timestamp = Time.now();
+        };
+
+        let updatedMessages = List.fromArray<Message>((convo.messages.toArray()).concat([message]));
+        let updatedConvo = {
+          convo with messages = updatedMessages;
+        };
+        conversations.add(conversationId, updatedConvo);
+      };
+    };
+  };
+
+  public query ({ caller }) func getConversation(conversationId : Nat) : async ?{
+    id : Nat;
+    orgId : OrgId;
+    participants : [Principal];
+    messages : [Message];
+  } {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can view conversations");
+    };
+
+    switch (conversations.get(conversationId)) {
+      case (null) { null };
+      case (?convo) {
+        if (convo.participants.find(func(p) { p == caller }) == null) {
+          Runtime.trap("Unauthorized: You must be a participant to view this conversation");
+        };
+        ?{
+          id = convo.id;
+          orgId = convo.orgId;
+          participants = convo.participants.toArray();
+          messages = convo.messages.toArray();
+        };
+      };
+    };
+  };
+
+  public query ({ caller }) func getUserConversations(orgId : OrgId) : async [{
+    id : Nat;
+    orgId : OrgId;
+    participants : [Principal];
+    messages : [Message];
+  }] {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can view conversations");
+    };
+
+    if (not isOrgMember(caller, orgId)) {
+      Runtime.trap("Unauthorized: You must be a member of this organization");
+    };
+
+    let allConvos = conversations.values().toArray();
+    let userConvos = allConvos.filter(func(convo) { 
+      convo.orgId == orgId and convo.participants.find(func(p) { p == caller }) != null
+    });
+    
+    userConvos.map(func(convo) {
+      {
+        id = convo.id;
+        orgId = convo.orgId;
+        participants = convo.participants.toArray();
+        messages = convo.messages.toArray();
+      }
+    });
+  };
+
+  // Forum Methods
+  public shared ({ caller }) func createTopic(orgId : OrgId, title : Text, content : Text) : async Nat {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can create topics");
+    };
+
+    if (not isOrgMember(caller, orgId)) {
+      Runtime.trap("Unauthorized: You must be a member of this organization to create topics");
+    };
+
+    let topicId = nextTopicId;
+    nextTopicId += 1;
+
+    let topic : ForumTopic = {
+      id = topicId;
+      orgId;
+      title;
+      author = caller;
+      content;
+      replies = List.empty<ForumReply>();
+      timestamp = Time.now();
+    };
+
+    forumTopics.add(topicId, topic);
+    topicId;
+  };
+
+  public shared ({ caller }) func addReply(topicId : Nat, content : Text) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can reply to topics");
+    };
+
+    switch (forumTopics.get(topicId)) {
+      case (null) { Runtime.trap("Topic not found") };
+      case (?topic) {
+        if (not isOrgMember(caller, topic.orgId)) {
+          Runtime.trap("Unauthorized: You must be a member of this organization to reply");
+        };
+
+        let reply : ForumReply = {
+          author = caller;
+          content;
+          timestamp = Time.now();
+        };
+
+        let updatedReplies = List.fromArray<ForumReply>((topic.replies.toArray()).concat([reply]));
+        let updatedTopic = {
+          topic with replies = updatedReplies;
+        };
+        forumTopics.add(topicId, updatedTopic);
+      };
+    };
+  };
+
+  public query ({ caller }) func getTopic(topicId : Nat) : async ?{
+    id : Nat;
+    orgId : OrgId;
+    title : Text;
+    author : Principal;
+    content : Text;
+    replies : [ForumReply];
+    timestamp : Time.Time;
+  } {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can view topics");
+    };
+
+    switch (forumTopics.get(topicId)) {
+      case (null) { null };
+      case (?topic) {
+        if (not isOrgMember(caller, topic.orgId)) {
+          Runtime.trap("Unauthorized: You must be a member of this organization to view this topic");
+        };
+        ?{
+          id = topic.id;
+          orgId = topic.orgId;
+          title = topic.title;
+          author = topic.author;
+          content = topic.content;
+          replies = topic.replies.toArray();
+          timestamp = topic.timestamp;
+        };
+      };
+    };
+  };
+
+  public query ({ caller }) func getOrgTopics(orgId : OrgId) : async [{
+    id : Nat;
+    orgId : OrgId;
+    title : Text;
+    author : Principal;
+    content : Text;
+    replies : [ForumReply];
+    timestamp : Time.Time;
+  }] {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can view topics");
+    };
+
+    if (not isOrgMember(caller, orgId)) {
+      Runtime.trap("Unauthorized: You must be a member of this organization to view topics");
+    };
+
+    let allTopics = forumTopics.values().toArray();
+    let orgTopics = allTopics.filter(func(topic) { topic.orgId == orgId });
+    
+    orgTopics.map(func(topic) {
+      {
+        id = topic.id;
+        orgId = topic.orgId;
+        title = topic.title;
+        author = topic.author;
+        content = topic.content;
+        replies = topic.replies.toArray();
+        timestamp = topic.timestamp;
+      }
+    });
+  };
 };
+

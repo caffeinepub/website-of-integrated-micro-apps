@@ -24,23 +24,38 @@ export interface MicroApp {
   iconKey: string;
 }
 
+export interface Category {
+  key: MicroAppCategory;
+  label: string;
+}
+
+export const categories: Category[] = [
+  { key: 'ai', label: 'AI' },
+  { key: 'banking', label: 'Banking' },
+  { key: 'payments', label: 'Payments' },
+  { key: 'dao', label: 'DAO' },
+  { key: 'network', label: 'Network' },
+  { key: 'messaging', label: 'Messaging' },
+  { key: 'forums', label: 'Forums' },
+  { key: 'social', label: 'Social' },
+  { key: 'marketplace', label: 'Marketplace' },
+  { key: 'analytics', label: 'Analytics' },
+  { key: 'events', label: 'Events' },
+  { key: 'knowledge', label: 'Knowledge' },
+  { key: 'forms', label: 'Forms' },
+  { key: 'files', label: 'Files' },
+  { key: 'support', label: 'Support' },
+];
+
 export const microAppsCatalog: MicroApp[] = [
   // AI Category
   {
     id: 'ai-playground',
     slug: 'ai-playground',
     name: 'AI Playground',
-    description: 'Experiment with AI prompts and responses in a safe environment',
+    description: 'Experiment with AI prompts and responses in a safe environment.',
     category: 'ai',
-    iconKey: 'icon-ai',
-  },
-  {
-    id: 'ai-assistant',
-    slug: 'ai-assistant',
-    name: 'AI Assistant',
-    description: 'Your personal AI helper for daily tasks and questions',
-    category: 'ai',
-    iconKey: 'icon-ai',
+    iconKey: 'ai',
   },
 
   // Banking Category
@@ -48,81 +63,49 @@ export const microAppsCatalog: MicroApp[] = [
     id: 'banking-dashboard',
     slug: 'banking-dashboard',
     name: 'Banking Dashboard',
-    description: 'Manage your accounts and transactions securely',
+    description: 'Manage accounts, transactions, and financial insights.',
     category: 'banking',
-    iconKey: 'icon-banking',
+    iconKey: 'banking',
   },
 
   // Payments Category
   {
-    id: 'payments-hub',
-    slug: 'payments-hub',
-    name: 'Payments Hub',
-    description: 'Send and receive payments instantly with low fees',
+    id: 'payment-gateway',
+    slug: 'payment-gateway',
+    name: 'Payment Gateway',
+    description: 'Process payments securely with multiple payment methods.',
     category: 'payments',
-    iconKey: 'icon-payments',
-  },
-  {
-    id: 'wallet-manager',
-    slug: 'wallet-manager',
-    name: 'Wallet Manager',
-    description: 'Manage multiple wallets and track your balances',
-    category: 'payments',
-    iconKey: 'icon-payments',
+    iconKey: 'payments',
   },
 
   // DAO Category
   {
-    id: 'dao-proposals',
-    slug: 'dao-proposals',
-    name: 'DAO Proposals',
-    description: 'Create and vote on governance proposals for your organization',
+    id: 'dao-voting',
+    slug: 'dao-voting',
+    name: 'DAO Voting',
+    description: 'Participate in decentralized governance and voting.',
     category: 'dao',
-    iconKey: 'icon-dao',
-  },
-  {
-    id: 'dao-treasury',
-    slug: 'dao-treasury',
-    name: 'DAO Treasury',
-    description: 'Track and manage your organization treasury',
-    category: 'dao',
-    iconKey: 'icon-dao',
+    iconKey: 'dao',
   },
 
   // Network Category
   {
-    id: 'professional-network',
-    slug: 'professional-network',
-    name: 'Professional Network',
-    description: 'Connect with professionals in your industry',
+    id: 'network-monitor',
+    slug: 'network-monitor',
+    name: 'Network Monitor',
+    description: 'Monitor network performance and connectivity in real-time.',
     category: 'network',
-    iconKey: 'icon-network',
-  },
-  {
-    id: 'job-board',
-    slug: 'job-board',
-    name: 'Job Board',
-    description: 'Find opportunities and post job listings',
-    category: 'network',
-    iconKey: 'icon-network',
+    iconKey: 'network',
   },
 
   // Messaging Category
   {
-    id: 'messaging',
-    slug: 'messaging',
-    name: 'Messaging',
-    description: 'Secure, private messaging for teams and individuals',
+    id: 'messaging-inbox',
+    slug: 'messaging-inbox',
+    name: 'Messaging Inbox',
+    description: 'Send and receive messages with organization members. Supports real-time message updates, conversation threading, and multi-tenant data isolation.',
     category: 'messaging',
-    iconKey: 'icon-messaging',
-  },
-  {
-    id: 'video-calls',
-    slug: 'video-calls',
-    name: 'Video Calls',
-    description: 'High-quality video conferencing for remote teams',
-    category: 'messaging',
-    iconKey: 'icon-messaging',
+    iconKey: 'messaging',
   },
 
   // Forums Category
@@ -130,17 +113,9 @@ export const microAppsCatalog: MicroApp[] = [
     id: 'forum',
     slug: 'forum',
     name: 'Community Forum',
-    description: 'Discuss topics and share knowledge with the community',
+    description: 'Participate in organization discussions with topics and replies. Features real-time updates, user-generated content, and role-based moderation controls.',
     category: 'forums',
-    iconKey: 'icon-forums',
-  },
-  {
-    id: 'qa-platform',
-    slug: 'qa-platform',
-    name: 'Q&A Platform',
-    description: 'Ask questions and get answers from experts',
-    category: 'forums',
-    iconKey: 'icon-forums',
+    iconKey: 'forums',
   },
 
   // Social Category
@@ -148,143 +123,19 @@ export const microAppsCatalog: MicroApp[] = [
     id: 'social-feed',
     slug: 'social-feed',
     name: 'Social Feed',
-    description: 'Share updates and connect with friends and followers',
+    description: 'Create, share, and interact with posts within your organization. Features real-time updates, user-generated content, and organization-scoped data isolation.',
     category: 'social',
-    iconKey: 'icon-social',
-  },
-  {
-    id: 'stories',
-    slug: 'stories',
-    name: 'Stories',
-    description: 'Share moments that disappear after 24 hours',
-    category: 'social',
-    iconKey: 'icon-social',
+    iconKey: 'social',
   },
 
   // Marketplace Category
   {
-    id: 'marketplace',
-    slug: 'marketplace',
-    name: 'Marketplace',
-    description: 'Buy and sell products from verified vendors',
+    id: 'vendor-marketplace',
+    slug: 'vendor-marketplace',
+    name: 'Vendor Marketplace',
+    description: 'Browse and connect with verified vendors and service providers.',
     category: 'marketplace',
-    iconKey: 'icon-marketplace',
-  },
-  {
-    id: 'vendor-directory',
-    slug: 'vendor-directory',
-    name: 'Vendor Directory',
-    description: 'Discover and connect with service providers',
-    category: 'marketplace',
-    iconKey: 'icon-marketplace',
-  },
-
-  // Analytics Category
-  {
-    id: 'analytics-dashboard',
-    slug: 'analytics-dashboard',
-    name: 'Analytics Dashboard',
-    description: 'Track metrics and visualize your data',
-    category: 'analytics',
-    iconKey: 'icon-analytics',
-  },
-  {
-    id: 'reports-builder',
-    slug: 'reports-builder',
-    name: 'Reports Builder',
-    description: 'Create custom reports and export data',
-    category: 'analytics',
-    iconKey: 'icon-analytics',
-  },
-
-  // Events Category
-  {
-    id: 'events-calendar',
-    slug: 'events-calendar',
-    name: 'Events Calendar',
-    description: 'Schedule and manage events for your organization',
-    category: 'events',
-    iconKey: 'icon-events',
-  },
-  {
-    id: 'ticketing',
-    slug: 'ticketing',
-    name: 'Event Ticketing',
-    description: 'Sell tickets and manage event registrations',
-    category: 'events',
-    iconKey: 'icon-events',
-  },
-
-  // Knowledge Category
-  {
-    id: 'knowledge-base',
-    slug: 'knowledge-base',
-    name: 'Knowledge Base',
-    description: 'Organize and share documentation and guides',
-    category: 'knowledge',
-    iconKey: 'icon-knowledge',
-  },
-  {
-    id: 'wiki',
-    slug: 'wiki',
-    name: 'Wiki',
-    description: 'Collaborative knowledge management for teams',
-    category: 'knowledge',
-    iconKey: 'icon-knowledge',
-  },
-
-  // Forms Category
-  {
-    id: 'form-builder',
-    slug: 'form-builder',
-    name: 'Form Builder',
-    description: 'Create custom forms and collect responses',
-    category: 'forms',
-    iconKey: 'icon-forms',
-  },
-  {
-    id: 'surveys',
-    slug: 'surveys',
-    name: 'Surveys',
-    description: 'Gather feedback with powerful survey tools',
-    category: 'forms',
-    iconKey: 'icon-forms',
-  },
-
-  // Files Category
-  {
-    id: 'file-storage',
-    slug: 'file-storage',
-    name: 'File Storage',
-    description: 'Store and share files securely in the cloud',
-    category: 'files',
-    iconKey: 'icon-files',
-  },
-  {
-    id: 'document-editor',
-    slug: 'document-editor',
-    name: 'Document Editor',
-    description: 'Collaborate on documents in real-time',
-    category: 'files',
-    iconKey: 'icon-files',
-  },
-
-  // Support Category
-  {
-    id: 'help-desk',
-    slug: 'help-desk',
-    name: 'Help Desk',
-    description: 'Manage customer support tickets efficiently',
-    category: 'support',
-    iconKey: 'icon-support',
-  },
-  {
-    id: 'live-chat',
-    slug: 'live-chat',
-    name: 'Live Chat',
-    description: 'Provide instant support to your customers',
-    category: 'support',
-    iconKey: 'icon-support',
+    iconKey: 'marketplace',
   },
 ];
 
@@ -292,24 +143,44 @@ export function getMicroAppBySlug(slug: string): MicroApp | undefined {
   return microAppsCatalog.find((app) => app.slug === slug);
 }
 
-export function getMicroAppsByCategory(category: MicroAppCategory): MicroApp[] {
-  return microAppsCatalog.filter((app) => app.category === category);
+export function getCategoryColor(category: MicroAppCategory): string {
+  const colors: Record<MicroAppCategory, string> = {
+    ai: 'oklch(0.7 0.2 340)',
+    banking: 'oklch(0.65 0.18 220)',
+    payments: 'oklch(0.72 0.18 160)',
+    dao: 'oklch(0.68 0.19 280)',
+    network: 'oklch(0.7 0.18 200)',
+    messaging: 'oklch(0.68 0.19 35)',
+    forums: 'oklch(0.7 0.19 60)',
+    social: 'oklch(0.72 0.2 20)',
+    marketplace: 'oklch(0.68 0.18 120)',
+    analytics: 'oklch(0.65 0.19 260)',
+    events: 'oklch(0.7 0.18 300)',
+    knowledge: 'oklch(0.68 0.18 180)',
+    forms: 'oklch(0.7 0.19 100)',
+    files: 'oklch(0.66 0.18 240)',
+    support: 'oklch(0.72 0.19 40)',
+  };
+  return colors[category] || 'oklch(0.68 0.19 35)';
 }
 
-export const categories: { key: MicroAppCategory; label: string }[] = [
-  { key: 'ai', label: 'AI' },
-  { key: 'banking', label: 'Banking' },
-  { key: 'payments', label: 'Payments' },
-  { key: 'dao', label: 'DAO' },
-  { key: 'network', label: 'Professional Network' },
-  { key: 'messaging', label: 'Messaging' },
-  { key: 'forums', label: 'Forums' },
-  { key: 'social', label: 'Social Media' },
-  { key: 'marketplace', label: 'Marketplace' },
-  { key: 'analytics', label: 'Analytics' },
-  { key: 'events', label: 'Events' },
-  { key: 'knowledge', label: 'Knowledge Base' },
-  { key: 'forms', label: 'Forms & Surveys' },
-  { key: 'files', label: 'File Sharing' },
-  { key: 'support', label: 'Customer Support' },
-];
+export function getCategoryIcon(category: MicroAppCategory): string {
+  const icons: Record<MicroAppCategory, string> = {
+    ai: '/assets/generated/icon-ai.dim_256x256.png',
+    banking: '/assets/generated/icon-banking.dim_256x256.png',
+    payments: '/assets/generated/icon-payments.dim_256x256.png',
+    dao: '/assets/generated/icon-dao.dim_256x256.png',
+    network: '/assets/generated/icon-network.dim_256x256.png',
+    messaging: '/assets/generated/icon-messaging.dim_256x256.png',
+    forums: '/assets/generated/icon-forums.dim_256x256.png',
+    social: '/assets/generated/icon-social.dim_256x256.png',
+    marketplace: '/assets/generated/icon-marketplace.dim_256x256.png',
+    analytics: '/assets/generated/icon-network.dim_256x256.png',
+    events: '/assets/generated/icon-dao.dim_256x256.png',
+    knowledge: '/assets/generated/icon-forums.dim_256x256.png',
+    forms: '/assets/generated/icon-payments.dim_256x256.png',
+    files: '/assets/generated/icon-banking.dim_256x256.png',
+    support: '/assets/generated/icon-messaging.dim_256x256.png',
+  };
+  return icons[category] || icons.social;
+}

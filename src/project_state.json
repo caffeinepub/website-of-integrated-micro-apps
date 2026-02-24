@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 7,
+  "projectStateVersion": 21,
   "summary": "Build a portal website on ICP that hosts/links to an integrated suite of micro-apps/subsites (inspired by best-of-breed Web2/Web3 apps). Micro-apps should be easy to use with playful color-coded icons, support multilingual + multi-tenant orgs/users/vendors, integrate via shared APIs, include multi-wallet support, and provide owner/admin/user permissions with dashboards/metrics. Provide guidance on best-in-class pricing for offered services.",
   "architectural_notes": [
     "Target deployment/platform: Internet Computer Protocol (ICP).",
@@ -150,6 +150,142 @@
         "REQ-19"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-comprehensive-documentation-explaining-the-access-model-for-all-micro-apps-covering-1-how-internet-identity-authentication-works-for-the-portal-2-how-the-shared-interoperability-layer-provides-consistent-access-to-user-profile-active-organization-context-and-role-across-all-micro-apps-3-how-role-based-access-control-owner-admin-user-determines-what-features-and-pages-each-user-can-access-4-how-multi-tenant-organization-boundaries-ensure-data-isolation-between-organizations-and-5-a-high-level-overview-of-the-interop-apis-getinteropcontext-getuserrole-logactivity-that-micro-apps-use-for-authentication-and-authorization-place-this-documentation-in-frontend-docs-access-model-overview-md",
+      "title": "Add comprehensive documentation explaining the access model for all micro-apps, covering: (1) how Internet Identity authentication works for the portal, (2) how the shared interoperability layer provides consistent access to user profile, active organization context, and role across all micro-apps, (3) how role-based access control (Owner/Admin/User) determines what features and pages each user can access, (4) how multi-tenant organization boundaries ensure data isolation between organizations, and (5) a high-level overview of the interop APIs (getInteropContext, getUserRole, logActivity) that micro-apps use for authentication and authorization. Place this documentation in frontend/docs/access-model-overview.md.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-phase-1-of-the-test-suite-setup-add-a-new-directory-frontend-src-tests-with-a-readme-md-that-explains-the-test-structure-and-provides-setup-instructions-for-running-tests-locally-include-in-the-readme-1-prerequisites-node-js-dfx-local-replica-2-commands-to-install-test-dependencies-e-g-vitest-testing-library-3-instructions-to-start-the-local-replica-and-deploy-the-backend-canister-for-testing-4-how-to-run-the-test-suite-and-5-a-brief-overview-of-the-test-categories-isolation-contract-multi-tenant-workflow-failure",
+      "title": "Create Phase 1 of the test suite setup: add a new directory frontend/src/__tests__ with a README.md that explains the test structure and provides setup instructions for running tests locally. Include in the README: (1) prerequisites (Node.js, dfx, local replica), (2) commands to install test dependencies (e.g., Vitest, Testing Library), (3) instructions to start the local replica and deploy the backend canister for testing, (4) how to run the test suite, and (5) a brief overview of the test categories (isolation, contract, multi-tenant, workflow, failure).",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-phase-2-of-the-test-suite-setup-implement-starter-test-files-for-the-shared-interoperability-layer-based-on-the-test-suite-outline-frontend-docs-shared-interop-test-suite-outline-md-create-at-least-three-test-files-1-frontend-src-tests-interop-isolation-test-ts-covering-isolation-tests-for-getinteropcontext-getuserrole-and-logactivity-with-unauthenticated-authenticated-states-2-frontend-src-tests-interop-contract-test-ts-covering-contract-shape-assertions-for-the-three-interop-apis-to-validate-returned-data-structures-and-3-frontend-src-tests-interop-multitenant-test-ts-covering-multi-tenant-boundary-tests-to-ensure-organization-data-isolation-each-test-file-should-include-at-least-2-3-concrete-test-cases-with-describe-it-blocks-mock-actor-setup-and-assertions-aligned-with-the-test-suite-outline-use-vitest-as-the-test-framework",
+      "title": "Create Phase 2 of the test suite setup: implement starter test files for the shared interoperability layer based on the test suite outline (frontend/docs/shared-interop-test-suite-outline.md). Create at least three test files: (1) frontend/src/__tests__/interop-isolation.test.ts covering isolation tests for getInteropContext, getUserRole, and logActivity with unauthenticated/authenticated states, (2) frontend/src/__tests__/interop-contract.test.ts covering contract/shape assertions for the three interop APIs to validate returned data structures, and (3) frontend/src/__tests__/interop-multitenant.test.ts covering multi-tenant boundary tests to ensure organization data isolation. Each test file should include at least 2-3 concrete test cases with describe/it blocks, mock actor setup, and assertions aligned with the test suite outline. Use Vitest as the test framework.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-comprehensive-step-by-step-guide-to-frontend-src-tests-readme-md-explaining-how-to-run-the-test-suite-locally-including-1-starting-the-local-dfx-replica-with-dfx-start-clean-background-2-deploying-the-backend-canister-with-dfx-deploy-backend-3-installing-test-dependencies-with-npm-install-save-dev-vitest-vitest-ui-testing-library-react-testing-library-jest-dom-happy-dom-4-running-tests-with-npm-test-or-npx-vitest-5-running-tests-in-ui-mode-with-npx-vitest-ui-and-6-troubleshooting-common-issues-like-canister-connection-errors-or-missing-environment-variables",
+      "title": "Add a comprehensive step-by-step guide to frontend/src/__tests__/README.md explaining how to run the test suite locally, including: (1) starting the local dfx replica with 'dfx start --clean --background', (2) deploying the backend canister with 'dfx deploy backend', (3) installing test dependencies with 'npm install --save-dev vitest @vitest/ui @testing-library/react @testing-library/jest-dom happy-dom', (4) running tests with 'npm test' or 'npx vitest', (5) running tests in UI mode with 'npx vitest --ui', and (6) troubleshooting common issues like canister connection errors or missing environment variables.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-npm-scripts-to-package-json-for-running-tests-1-test-script-that-runs-vitest-run-for-single-execution-2-test-watch-script-that-runs-vitest-for-watch-mode-3-test-ui-script-that-runs-vitest-ui-for-interactive-ui-mode-and-4-test-coverage-script-that-runs-vitest-run-coverage-if-coverage-tooling-is-configured",
+      "title": "Add npm scripts to package.json for running tests: (1) 'test' script that runs 'vitest run' for single execution, (2) 'test:watch' script that runs 'vitest' for watch mode, (3) 'test:ui' script that runs 'vitest --ui' for interactive UI mode, and (4) 'test:coverage' script that runs 'vitest run --coverage' if coverage tooling is configured.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-tests-readme-md-to-include-a-quick-start-section-at-the-top-with-a-condensed-command-sequence-for-experienced-developers-start-replica-deploy-backend-install-deps-run-tests-place-this-above-the-detailed-step-by-step-instructions",
+      "title": "Update frontend/src/__tests__/README.md to include a 'Quick Start' section at the top with a condensed command sequence for experienced developers: start replica, deploy backend, install deps, run tests. Place this above the detailed step-by-step instructions.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-concrete-test-cases-in-frontend-src-tests-interop-isolation-test-ts-with-at-least-3-tests-1-test-that-getinteropcontext-returns-null-when-called-without-authentication-2-test-that-getuserrole-returns-null-for-unauthenticated-calls-and-3-test-that-logactivity-requires-authentication-and-returns-an-error-or-throws-when-called-unauthenticated-use-vitest-describe-it-blocks-with-mock-actor-setup-and-assertions",
+      "title": "Implement concrete test cases in frontend/src/__tests__/interop-isolation.test.ts with at least 3 tests: (1) test that getInteropContext returns null when called without authentication, (2) test that getUserRole returns null for unauthenticated calls, and (3) test that logActivity requires authentication and returns an error or throws when called unauthenticated. Use vitest describe/it blocks with mock actor setup and assertions.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-concrete-test-cases-in-frontend-src-tests-interop-contract-test-ts-with-at-least-3-tests-1-test-that-getinteropcontext-returns-an-object-with-expected-shape-principal-profile-activeorg-role-fields-2-test-that-getuserrole-returns-a-valid-userrole-enum-value-owner-admin-or-user-or-null-and-3-test-that-logactivity-accepts-the-expected-parameters-microappid-actiontype-metadata-and-returns-a-success-indicator-use-vitest-describe-it-blocks-with-mock-actor-setup-and-shape-validation-assertions",
+      "title": "Implement concrete test cases in frontend/src/__tests__/interop-contract.test.ts with at least 3 tests: (1) test that getInteropContext returns an object with expected shape (principal, profile, activeOrg, role fields), (2) test that getUserRole returns a valid UserRole enum value ('owner', 'admin', or 'user') or null, and (3) test that logActivity accepts the expected parameters (microAppId, actionType, metadata) and returns a success indicator. Use vitest describe/it blocks with mock actor setup and shape validation assertions.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-concrete-test-cases-in-frontend-src-tests-interop-multitenant-test-ts-with-at-least-3-tests-1-test-that-getinteropcontext-only-returns-data-for-organizations-the-user-belongs-to-2-test-that-getuserrole-returns-null-when-querying-a-role-for-an-organization-the-user-is-not-a-member-of-and-3-test-that-logactivity-is-scoped-to-the-user-s-active-organization-and-does-not-leak-data-across-organization-boundaries-use-vitest-describe-it-blocks-with-mock-actor-setup-simulating-multiple-organizations-and-assertions-validating-data-isolation",
+      "title": "Implement concrete test cases in frontend/src/__tests__/interop-multitenant.test.ts with at least 3 tests: (1) test that getInteropContext only returns data for organizations the user belongs to, (2) test that getUserRole returns null when querying a role for an organization the user is not a member of, and (3) test that logActivity is scoped to the user's active organization and does not leak data across organization boundaries. Use vitest describe/it blocks with mock actor setup simulating multiple organizations and assertions validating data isolation.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-test-setup-utilities-in-frontend-src-tests-setup-ts-including-1-a-createmockactor-utility-function-that-returns-a-mock-backend-actor-with-stub-implementations-of-getinteropcontext-getuserrole-and-logactivity-2-test-fixtures-for-userprofile-interopcontext-and-organization-objects-with-realistic-sample-data-3-helper-functions-to-generate-mock-principals-for-testing-and-4-a-beforeeach-hook-that-resets-all-mocks-and-clears-state-between-tests",
+      "title": "Implement the test setup utilities in frontend/src/__tests__/setup.ts including: (1) a createMockActor utility function that returns a mock backend actor with stub implementations of getInteropContext, getUserRole, and logActivity, (2) test fixtures for UserProfile, InteropContext, and Organization objects with realistic sample data, (3) helper functions to generate mock principals for testing, and (4) a beforeEach hook that resets all mocks and clears state between tests.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-research-and-document-available-replica-micro-apps-from-the-caffeineai-system-that-can-be-cloned-and-adapted-create-a-markdown-document-at-frontend-docs-caffeineai-replica-apps-md-listing-each-available-replica-app-with-its-name-description-primary-features-current-implementation-status-and-assessment-of-adaptation-complexity-for-this-portal",
+      "title": "Research and document available replica micro-apps from the CaffeineAI system that can be cloned and adapted. Create a markdown document at frontend/docs/caffeineai-replica-apps.md listing each available replica app with its name, description, primary features, current implementation status, and assessment of adaptation complexity for this portal.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-clone-the-most-suitable-caffeineai-replica-micro-app-for-the-social-media-category-and-adapt-it-to-work-within-the-portal-s-multi-tenant-architecture-integrate-it-with-the-shared-interoperability-layer-useinteropcontext-hook-for-authentication-organization-context-and-activity-logging-replace-the-existing-socialfeedshell-tsx-with-the-adapted-replica-app-implementation-while-maintaining-the-portal-s-coral-orange-visual-theme-and-role-based-access-controls",
+      "title": "Clone the most suitable CaffeineAI replica micro-app for the Social Media category and adapt it to work within the portal's multi-tenant architecture. Integrate it with the shared interoperability layer (useInteropContext hook) for authentication, organization context, and activity logging. Replace the existing SocialFeedShell.tsx with the adapted replica app implementation while maintaining the portal's coral/orange visual theme and role-based access controls.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-clone-the-most-suitable-caffeineai-replica-micro-app-for-the-messaging-category-and-adapt-it-to-work-within-the-portal-s-multi-tenant-architecture-integrate-it-with-the-shared-interoperability-layer-for-authentication-organization-context-and-activity-logging-replace-the-existing-messaginginboxshell-tsx-with-the-adapted-replica-app-implementation-while-maintaining-the-portal-s-visual-theme-and-ensuring-messages-are-scoped-to-the-user-s-active-organization",
+      "title": "Clone the most suitable CaffeineAI replica micro-app for the Messaging category and adapt it to work within the portal's multi-tenant architecture. Integrate it with the shared interoperability layer for authentication, organization context, and activity logging. Replace the existing MessagingInboxShell.tsx with the adapted replica app implementation while maintaining the portal's visual theme and ensuring messages are scoped to the user's active organization.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-clone-the-most-suitable-caffeineai-replica-micro-app-for-the-forum-reddit-like-category-and-adapt-it-to-work-within-the-portal-s-multi-tenant-architecture-integrate-it-with-the-shared-interoperability-layer-for-authentication-organization-context-and-activity-logging-replace-the-existing-forumshell-tsx-with-the-adapted-replica-app-implementation-while-maintaining-the-portal-s-visual-theme-and-ensuring-forum-topics-threads-are-scoped-to-the-user-s-active-organization",
+      "title": "Clone the most suitable CaffeineAI replica micro-app for the Forum/Reddit-like category and adapt it to work within the portal's multi-tenant architecture. Integrate it with the shared interoperability layer for authentication, organization context, and activity logging. Replace the existing ForumShell.tsx with the adapted replica app implementation while maintaining the portal's visual theme and ensuring forum topics/threads are scoped to the user's active organization.",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-adapted-replica-micro-app-frontend-components-to-connect-to-the-new-backend-data-models-using-react-query-hooks-create-custom-hooks-usesocialposts-useconversations-useforumtopics-that-fetch-and-mutate-data-from-the-backend-handle-loading-and-error-states-and-automatically-invalidate-queries-when-data-changes-ensure-hooks-respect-the-active-organization-context-from-useinteropcontext",
+      "title": "Update the adapted replica micro-app frontend components to connect to the new backend data models using React Query hooks. Create custom hooks (useSocialPosts, useConversations, useForumTopics) that fetch and mutate data from the backend, handle loading and error states, and automatically invalidate queries when data changes. Ensure hooks respect the active organization context from useInteropContext.",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-real-time-update-capabilities-to-the-adapted-replica-micro-apps-by-implementing-polling-or-periodic-query-refetching-for-social-posts-messages-and-forum-topics-configure-react-query-to-refetch-data-at-appropriate-intervals-e-g-every-30-seconds-for-messaging-every-60-seconds-for-social-feed-and-forum-so-users-see-new-content-without-manual-refresh",
+      "title": "Add real-time update capabilities to the adapted replica micro-apps by implementing polling or periodic query refetching for social posts, messages, and forum topics. Configure React Query to refetch data at appropriate intervals (e.g., every 30 seconds for messaging, every 60 seconds for social feed and forum) so users see new content without manual refresh.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-micro-apps-catalog-in-frontend-src-catalog-microappscatalog-ts-to-reflect-the-enhanced-functionality-of-the-three-adapted-replica-apps-social-feed-messaging-forum-update-their-descriptions-to-indicate-they-now-support-real-user-generated-content-multi-tenant-data-isolation-and-real-time-updates-ensure-the-catalog-still-references-the-correct-route-slugs-and-category-assignments",
+      "title": "Update the micro-apps catalog in frontend/src/catalog/microAppsCatalog.ts to reflect the enhanced functionality of the three adapted replica apps (social feed, messaging, forum). Update their descriptions to indicate they now support real user-generated content, multi-tenant data isolation, and real-time updates. Ensure the catalog still references the correct route slugs and category assignments.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -239,6 +375,170 @@
       "id": "AR-22",
       "summary": "Create a compact test suite outline for testing the shared interoperability layer (identity, org context, roles, activity logging) including isolation, contract, multi-tenant boundary, workflow-chain, and failure-condition tests",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Wire test suite into local project setup (split into two equal phases)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Implement concrete test cases in frontend/src/__tests__/interop-isolation.test.ts with at least 3 tests: (1) test that getInteropContext returns null when called without authentication, (2) test that getUserRole returns null for unauthenticated calls, and (3) test that logActivity requires authentication and returns an error or throws when called unauthenticated. Use vitest describe/it blocks with mock actor setup and assertions.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Implement concrete test cases in frontend/src/__tests__/interop-contract.test.ts with at least 3 tests: (1) test that getInteropContext returns an object with expected shape (principal, profile, activeOrg, role fields), (2) test that getUserRole returns a valid UserRole enum value ('owner', 'admin', or 'user') or null, and (3) test that logActivity accepts the expected parameters (microAppId, actionType, metadata) and returns a success indicator. Use vitest describe/it blocks with mock actor setup and shape validation assertions.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Implement concrete test cases in frontend/src/__tests__/interop-multitenant.test.ts with at least 3 tests: (1) test that getInteropContext only returns data for organizations the user belongs to, (2) test that getUserRole returns null when querying a role for an organization the user is not a member of, and (3) test that logActivity is scoped to the user's active organization and does not leak data across organization boundaries. Use vitest describe/it blocks with mock actor setup simulating multiple organizations and assertions validating data isolation.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Implement the test setup utilities in frontend/src/__tests__/setup.ts including: (1) a createMockActor utility function that returns a mock backend actor with stub implementations of getInteropContext, getUserRole, and logActivity, (2) test fixtures for UserProfile, InteropContext, and Organization objects with realistic sample data, (3) helper functions to generate mock principals for testing, and (4) a beforeEach hook that resets all mocks and clears state between tests.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Configure continuous integration (CI) pipeline for automated testing of the test suite",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Create a GitHub Actions workflow file at .github/workflows/ci.yml that runs the test suite on push to main branch and on pull requests. The workflow must include jobs to: (1) start a local dfx replica in the CI environment, (2) deploy the backend canister, (3) install frontend test dependencies (vitest, @vitest/ui, @testing-library/react, @testing-library/jest-dom, happy-dom), (4) run the test suite with 'npm test', and (5) upload test results as artifacts.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Configure the CI workflow to use dfx 0.15.0 or newer and Node.js 18.x or newer. Include steps to cache dfx installation and npm dependencies to speed up CI runs. Add a step to generate and upload a test coverage report if coverage tooling is available.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Add a CI status badge to the project README.md (or create README.md if it does not exist) that displays the current CI pipeline status from GitHub Actions. Include a brief section explaining how to run tests locally and a link to the test suite documentation at frontend/src/__tests__/README.md.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Update frontend/src/__tests__/README.md to include a new 'Continuous Integration' section that explains: (1) which CI platform is configured (GitHub Actions), (2) when tests run automatically (on push to main, on pull requests), (3) where to view CI results (GitHub Actions tab), and (4) how to troubleshoot CI failures by running the same commands locally.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Create a GitHub Actions workflow file at .github/workflows/ci.yml that runs the test suite on push to main branch and on pull requests, including jobs to start a local dfx replica, deploy the backend canister, install frontend test dependencies (vitest, @vitest/ui, @testing-library/react, @testing-library/jest-dom, happy-dom), run the test suite with 'npm test', and upload test results as artifacts",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Configure the CI workflow to use dfx 0.15.0 or newer and Node.js 18.x or newer, include steps to cache dfx installation and npm dependencies to speed up CI runs, and add a step to generate and upload a test coverage report if coverage tooling is available",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Add a CI status badge to the project README.md (or create README.md if it does not exist) that displays the current CI pipeline status from GitHub Actions, include a brief section explaining how to run tests locally, and add a link to the test suite documentation at frontend/src/__tests__/README.md",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Update frontend/src/__tests__/README.md to include a new 'Continuous Integration' section that explains which CI platform is configured (GitHub Actions), when tests run automatically (on push to main, on pull requests), where to view CI results (GitHub Actions tab), and how to troubleshoot CI failures by running the same commands locally",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Verify that the CI pipeline executes successfully on GitHub by pushing the workflow configuration to the repository and confirming that all test jobs complete without errors",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Add backend data models and CRUD methods to support persistent data for the adapted replica micro-apps. For social feed, add post storage (content, author, timestamp, organization). For messaging, add conversation and message storage (participants, messages, organization). For forum, add topic and reply storage (title, content, author, organization). Ensure all data models include organization ID for multi-tenant isolation and are accessible only to authenticated members of the organization.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Create a GitHub Actions workflow file at .github/workflows/ci.yml that runs the test suite on push to main branch and on pull requests. The workflow must include jobs to: (1) start a local dfx replica in the CI environment, (2) deploy the backend canister, (3) install frontend test dependencies (vitest, @vitest/ui, @testing-library/react, @testing-library/jest-dom, happy-dom), (4) run the test suite with 'npm test', and (5) upload test results as artifacts.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Configure the CI workflow to use dfx 0.15.0 or newer and Node.js 18.x or newer. Include steps to cache dfx installation and npm dependencies to speed up CI runs. Add a step to generate and upload a test coverage report if coverage tooling is available.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-47",
+      "summary": "Add a CI status badge to the project README.md (or create README.md if it does not exist) that displays the current CI pipeline status from GitHub Actions. Include a brief section explaining how to run tests locally and a link to the test suite documentation at frontend/src/__tests__/README.md.",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Update frontend/src/__tests__/README.md to include a new 'Continuous Integration' section that explains: (1) which CI platform is configured (GitHub Actions), (2) when tests run automatically (on push to main, on pull requests), (3) where to view CI results (GitHub Actions tab), and (4) how to troubleshoot CI failures by running the same commands locally.",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Verify that the CI pipeline executes successfully on GitHub by pushing the workflow configuration to the repository and confirming that all test jobs complete without errors. Document any environment-specific adjustments needed for the CI environment in the workflow file comments.",
+      "reqIds": [
+        "REQ-55"
+      ],
       "status": "pending"
     }
   ],

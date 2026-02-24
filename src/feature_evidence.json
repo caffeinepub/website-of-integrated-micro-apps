@@ -1,43 +1,4 @@
 {
   "kind": "feature_evidence_report",
-  "features": [
-    {
-      "featureId": "feature-add-a-compact-test-suite-outline-document-for-the-shared-interoperability-layer-that-enumerates-backend-canister-api-tests-for-getinteropcontext-getuserrole-and-logactivity-including-isolation-tests-contract-shape-assertions-multi-tenant-boundary-tests-workflow-chain-tests-and-failure-condition-tests",
-      "featureTitle": "Add a compact test suite outline document for the shared interoperability layer that enumerates backend canister API tests for getInteropContext, getUserRole, and logActivity, including isolation tests, contract/shape assertions, multi-tenant boundary tests, workflow-chain tests, and failure-condition tests.",
-      "files": [
-        "frontend/docs/shared-interop-test-suite-outline.md"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-18"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-include-in-the-test-suite-outline-a-minimal-repeatable-manual-test-execution-plan-using-multiple-identities-e-g-separate-local-identities-for-owner-admin-user-to-exercise-the-interoperability-apis-end-to-end-with-concrete-steps-and-expected-outcomes",
-      "featureTitle": "Include in the test suite outline a minimal, repeatable manual test execution plan using multiple identities (e.g., separate local identities for owner/admin/user) to exercise the interoperability APIs end-to-end, with concrete steps and expected outcomes.",
-      "files": [
-        "frontend/docs/shared-interop-test-suite-outline.md"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-19"
-      ],
-      "confidence": "high"
-    }
-  ]
+  "features": []
 }

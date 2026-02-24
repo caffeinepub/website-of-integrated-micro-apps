@@ -1,70 +1,130 @@
 {
   "kind": "build_request",
-  "title": "Compact test suite outline for shared interoperability layer",
+  "title": "Stage 2: CI Pipeline Configuration and Verification",
   "projectName": "Arkly Portal",
-  "priority": "normal",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-18",
-      "text": "Add a compact test suite outline document for the shared interoperability layer that enumerates backend canister API tests for getInteropContext, getUserRole, and logActivity, including isolation tests, contract/shape assertions, multi-tenant boundary tests, workflow-chain tests, and failure-condition tests.",
+      "id": "REQ-51",
+      "text": "Create a GitHub Actions workflow file at .github/workflows/ci.yml that runs the test suite on push to main branch and on pull requests. The workflow must include jobs to: (1) start a local dfx replica in the CI environment, (2) deploy the backend canister, (3) install frontend test dependencies (vitest, @vitest/ui, @testing-library/react, @testing-library/jest-dom, happy-dom), (4) run the test suite with 'npm test', and (5) upload test results as artifacts.",
       "target": "both",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-user-stage2"
         ],
         "quotes": [
-          "Yes please generate a compact test suite outline"
+          "begin building Stage 2 immediately"
         ]
       },
       "acceptanceCriteria": [
-        "A new markdown document exists in the repo that is clearly titled as the shared interoperability layer test suite outline.",
-        "The outline includes explicit test cases for getInteropContext covering: no profile, profile with no active org, profile with active org, and role resolution (owner/admin/user/null).",
-        "The outline includes explicit test cases for logActivity covering: orgId=0 logging, orgId=activeOrg logging, and unauthorized logging when caller is not an org member for orgId!=0.",
-        "The outline includes explicit multi-tenant boundary tests (e.g., user in Org A cannot obtain member/role context for Org B and cannot log activity to Org B).",
-        "The outline includes explicit workflow-chain scenarios (create org → join org → set active org in profile → getInteropContext → logActivity) with expected state transitions and assertions.",
-        "The outline includes explicit failure-condition tests that expect traps/denials for unauthorized profile access, unauthorized org access, unauthorized role checks, and unauthorized admin-only endpoints where applicable."
+        "Workflow file exists at .github/workflows/ci.yml",
+        "Workflow triggers on push to main and on pull requests",
+        "Job starts dfx replica successfully in CI environment",
+        "Job deploys backend canister before running tests",
+        "Job installs all required test dependencies",
+        "Job executes 'npm test' command",
+        "Test results are uploaded as workflow artifacts"
       ]
     },
     {
-      "id": "REQ-19",
-      "text": "Include in the test suite outline a minimal, repeatable manual test execution plan using multiple identities (e.g., separate local identities for owner/admin/user) to exercise the interoperability APIs end-to-end, with concrete steps and expected outcomes.",
+      "id": "REQ-52",
+      "text": "Configure the CI workflow to use dfx 0.15.0 or newer and Node.js 18.x or newer. Include steps to cache dfx installation and npm dependencies to speed up CI runs. Add a step to generate and upload a test coverage report if coverage tooling is available.",
       "target": "both",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-user-stage2"
         ],
         "quotes": [
-          "Yes please generate a compact test suite outline"
+          "begin building Stage 2 immediately"
         ]
       },
       "acceptanceCriteria": [
-        "The document describes how to run the outlined scenarios locally with at least two distinct callers to validate role changes and org-boundary behavior.",
-        "The document specifies the required preconditions and the expected outputs/observations for each manual test scenario (e.g., expected InteropContext fields, expected authorization failures).",
-        "The manual plan references the exact backend methods used in this project (getInteropContext, saveCallerUserProfile, createOrganization, joinOrganization, getUserRole, logActivity) and does not refer to non-existent endpoints."
+        "CI workflow specifies dfx version 0.15.0 or newer",
+        "CI workflow specifies Node.js version 18.x or newer",
+        "Workflow includes caching step for dfx installation",
+        "Workflow includes caching step for npm dependencies",
+        "If vitest coverage is configured, workflow generates coverage report",
+        "Coverage report is uploaded as workflow artifact if generated"
+      ]
+    },
+    {
+      "id": "REQ-53",
+      "text": "Add a CI status badge to the project README.md (or create README.md if it does not exist) that displays the current CI pipeline status from GitHub Actions. Include a brief section explaining how to run tests locally and a link to the test suite documentation at frontend/src/__tests__/README.md.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-user-stage2"
+        ],
+        "quotes": [
+          "begin building Stage 2 immediately"
+        ]
+      },
+      "acceptanceCriteria": [
+        "README.md file exists at project root",
+        "README includes GitHub Actions CI status badge",
+        "README includes section on running tests locally",
+        "README includes link to frontend/src/__tests__/README.md",
+        "Status badge displays correct workflow status"
+      ]
+    },
+    {
+      "id": "REQ-54",
+      "text": "Update frontend/src/__tests__/README.md to include a new 'Continuous Integration' section that explains: (1) which CI platform is configured (GitHub Actions), (2) when tests run automatically (on push to main, on pull requests), (3) where to view CI results (GitHub Actions tab), and (4) how to troubleshoot CI failures by running the same commands locally.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-stage2"
+        ],
+        "quotes": [
+          "begin building Stage 2 immediately"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Frontend test README includes 'Continuous Integration' section",
+        "Section documents GitHub Actions as the CI platform",
+        "Section explains automatic test triggers",
+        "Section provides location for viewing CI results",
+        "Section includes troubleshooting guidance with local command examples"
+      ]
+    },
+    {
+      "id": "REQ-55",
+      "text": "Verify that the CI pipeline executes successfully on GitHub by pushing the workflow configuration to the repository and confirming that all test jobs complete without errors. Document any environment-specific adjustments needed for the CI environment in the workflow file comments.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-user-stage2"
+        ],
+        "quotes": [
+          "begin building Stage 2 immediately"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Workflow successfully starts dfx replica in CI",
+        "Workflow successfully deploys backend canister",
+        "Workflow successfully installs dependencies",
+        "Workflow successfully runs test suite",
+        "All test jobs complete without errors",
+        "Workflow file includes comments documenting CI-specific configuration"
       ]
     }
   ],
   "constraints": [
-    "Respect the single-actor Motoko backend architecture; keep all Motoko logic in backend/main.mo if any code changes are needed.",
-    "Do not edit any frontend files under frontend/src/components/ui or other immutable paths listed in SYSTEM_CONTEXT."
+    "Must use GitHub Actions as the CI platform",
+    "Must use dfx 0.15.0 or newer",
+    "Must use Node.js 18.x or newer",
+    "Must not modify existing test files in frontend/src/__tests__/",
+    "CI workflow must run on both push to main and pull requests"
   ],
   "nonGoals": [
-    "Implementing a full automated test harness/CI pipeline for these tests.",
-    "Adding third-party testing services or external databases.",
-    "Building full end-to-end browser automation tests."
+    "Setting up CI for deployment to production",
+    "Configuring code quality or linting checks in CI",
+    "Adding security scanning or dependency audits",
+    "Creating multiple CI workflows for different environments",
+    "Implementing CD (Continuous Deployment) pipeline"
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

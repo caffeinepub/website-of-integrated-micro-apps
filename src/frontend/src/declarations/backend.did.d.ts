@@ -20,12 +20,22 @@ export interface ActivityLog {
   'eventType' : string,
 }
 export type AppId = bigint;
+export interface ForumReply {
+  'content' : string,
+  'author' : Principal,
+  'timestamp' : Time,
+}
 export interface InteropContext {
   'userRole' : [] | [UserRole],
   'activeOrg' : [] | [OrgId],
   'caller' : Principal,
   'authenticated' : boolean,
   'profile' : [] | [UserProfile],
+}
+export interface Message {
+  'content' : string,
+  'sender' : Principal,
+  'timestamp' : Time,
 }
 export type OrgId = bigint;
 export interface PricingPlan {
@@ -37,6 +47,13 @@ export interface PricingPlan {
   'description' : string,
   'category' : string,
   'price' : bigint,
+}
+export interface SocialPost {
+  'id' : bigint,
+  'content' : string,
+  'orgId' : OrgId,
+  'author' : Principal,
+  'timestamp' : Time,
 }
 export type Time = bigint;
 export interface UserProfile {
@@ -62,12 +79,17 @@ export interface Vendor {
 export type VendorId = bigint;
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addMessage' : ActorMethod<[bigint, string], undefined>,
+  'addReply' : ActorMethod<[bigint, string], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole__1], undefined>,
+  'createConversation' : ActorMethod<[OrgId, Array<Principal>], bigint>,
   'createOrganization' : ActorMethod<[string, string], OrgId>,
   'createPlan' : ActorMethod<
     [string, string, bigint, Array<string>, string],
     OrgId
   >,
+  'createPost' : ActorMethod<[OrgId, string], bigint>,
+  'createTopic' : ActorMethod<[OrgId, string, string], bigint>,
   'createVendor' : ActorMethod<[OrgId, string, string, string], VendorId>,
   'deactivateVendor' : ActorMethod<[VendorId], undefined>,
   'deleteOrganization' : ActorMethod<[OrgId], undefined>,
@@ -75,8 +97,34 @@ export interface _SERVICE {
   'getActivityLogs' : ActorMethod<[], Array<ActivityLog>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole__1>,
+  'getConversation' : ActorMethod<
+    [bigint],
+    [] | [
+      {
+        'id' : bigint,
+        'participants' : Array<Principal>,
+        'messages' : Array<Message>,
+        'orgId' : OrgId,
+      }
+    ]
+  >,
   'getDashboardMetrics' : ActorMethod<[], [bigint, bigint, bigint, bigint]>,
   'getInteropContext' : ActorMethod<[], InteropContext>,
+  'getOrgPosts' : ActorMethod<[OrgId], Array<SocialPost>>,
+  'getOrgTopics' : ActorMethod<
+    [OrgId],
+    Array<
+      {
+        'id' : bigint,
+        'title' : string,
+        'content' : string,
+        'orgId' : OrgId,
+        'author' : Principal,
+        'timestamp' : Time,
+        'replies' : Array<ForumReply>,
+      }
+    >
+  >,
   'getOrganization' : ActorMethod<
     [OrgId],
     {
@@ -89,7 +137,33 @@ export interface _SERVICE {
       'admins' : Array<Principal>,
     }
   >,
+  'getPost' : ActorMethod<[bigint], [] | [SocialPost]>,
   'getPublishedPlans' : ActorMethod<[], Array<PricingPlan>>,
+  'getTopic' : ActorMethod<
+    [bigint],
+    [] | [
+      {
+        'id' : bigint,
+        'title' : string,
+        'content' : string,
+        'orgId' : OrgId,
+        'author' : Principal,
+        'timestamp' : Time,
+        'replies' : Array<ForumReply>,
+      }
+    ]
+  >,
+  'getUserConversations' : ActorMethod<
+    [OrgId],
+    Array<
+      {
+        'id' : bigint,
+        'participants' : Array<Principal>,
+        'messages' : Array<Message>,
+        'orgId' : OrgId,
+      }
+    >
+  >,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'getUserRole' : ActorMethod<[OrgId, Principal], UserRole>,
   'getVendor' : ActorMethod<[VendorId], Vendor>,
